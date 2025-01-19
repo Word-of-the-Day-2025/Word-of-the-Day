@@ -1,0 +1,6 @@
+discord.py
+flask
+instagrapi
+pillow
+python-dotenv
+pytz
