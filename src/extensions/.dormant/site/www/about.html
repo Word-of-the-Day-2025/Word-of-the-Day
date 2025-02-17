@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Word of the Day</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="The Word of the Day, every day at 4:00 PM UTC.">
+    <!-- Meta tags for (not SEO) unblocking my domain on school networks. That's why you don't see anything about entertainment or fun here. -->
+    <meta name="keywords" content="vocabulary, education, learning, language, dictionary">
+    <meta name="author" content="Word of the Day">
+</head>
+<body>
+    <div class="top-bar">
+        <div class="top-bar-content">
+            <div class="left-links">
+                <a href="/">
+                    <img src="assets/svgs/wotd.svg" alt="WOTD" class="logo-left">
+                </a>
+                <span class="nav-divider"></span>
+                <a href="/subscribe">Subscribe</a>
+                <a href="/blog">Blog</a>
+                <a href="/about">About</a>
+            </div>
+            <div class="countdown">
+                <p id="countdown" class="countdown">??:??:??</p>
+            </div>
+            <div class="right-buttons">
+                <a href="https://discord.gg/a7cZhpFMgk">
+                    <img src="assets/svgs/discord.svg" alt="Discord server" title="Discord server" class="social-logo">
+                </a>
+                <a href="https://github.com/gaming-gaming/Word-of-the-Day">
+                    <img src="assets/svgs/github.svg" alt="GitHub repository" title="GitHub repository" class="social-logo">
+                </a>
+                <span class="nav-divider"></span>
+                <img src="assets/svgs/theme.svg" alt="Toggle theme" class="theme-toggle" title="Toggle theme" id="theme-toggle" onclick="toggleTheme()">
+                <script src="scripts/toggle-theme.js"></script>
+            </div>
+        </div>
+    </div>
+
+    <div class="top-header first-top-header">
+        <h1>About Word of the Day</h1>
+    </div>
+
+    <div class="about-container">
+        <div class="about-content">
+            <h2 class="about-header">What is Word of the Day?</h2>
+            <p class="about-text">Word of the Day is a free and open-source service that posts an interesting and uncommon word every day at 4:00 PM UTC. The word is accompanied by its pronunciation, definition, and part of speech, provided by Wiktionary. You can subscribe to Word of the Day via email, Discord, or Telegram. Or you can use the free API.</p>
+        </div>
+        <div class="about-content">
+            <h2 class="about-header">How can I support Word of the Day?</h2>
+            <p class="about-text">There is no way to donate because I don't need money. Go donate to the Wikimedia Foundation instead, they provide word information on Wiktionary. However, you can contribute to the project on GitHub.</p>
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="top-header">
+        <h1>Attributions</h1>
+    </div>
+
+    <div class="about-container">
+        <div class="about-content">
+            <h2 class="about-header">APIs</h2>
+            <p class="about-text">Word of the Day uses the Wiktionary API to get the pronunciation, definition, and part of speech of the word.</p>
+        </div>
+        <div class="about-content">
+            <h2 class="about-header">Fonts</h2>
+            <p class="about-text">All text on this site uses DejaVu Sans, a free and open-source font. The WOTD logo is in the font DejaVu Serif Bold.</p>
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Quotes -->
+    <div class="quote-container">
+        <img src="https://avatars.githubusercontent.com/u/142280747" alt="GitHub Profile Picture" class="profile-pic">
+        <div class="quote">
+            <p class="quote-author">Gaming Gaming<span class="quote-role">Creator of Word of the Day</span></p>
+            <p class="quote-text">"WOTD is the Word of the Day service that Merriam-Webster and Oxford wish they had. Frickin' nerds."</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <p>&copy; 2025 WOTD</p>
+            </div>
+            <div class="footer-right">
+                <a href="/about">About</a>
+                <a href="/api">API</a>
+                <a href="/contact">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+<script src="js/countdown.js"></script>
+</html>

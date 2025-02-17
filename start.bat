@@ -1,7 +1,7 @@
 @echo off
 setlocal
 
-REM Change directory to the src folder
+REM Change directory to the current folder
 cd %~dp0
 
 REM Set the path to the dat directory

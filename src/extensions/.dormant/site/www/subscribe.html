@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscribe to Word of the Day</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="The Word of the Day, every day at 4:00 PM UTC.">
+    <!-- Meta tags for (not SEO) unblocking my domain on school networks. That's why you don't see anything about entertainment or fun here. -->
+    <meta name="keywords" content="vocabulary, education, learning, language, dictionary">
+    <meta name="author" content="Word of the Day">
+</head>
+<body>
+    <div class="top-bar">
+        <div class="top-bar-content">
+            <div class="left-links">
+                <a href="/">
+                    <img src="assets/svgs/wotd.svg" alt="WOTD" class="logo-left">
+                </a>
+                <span class="nav-divider"></span>
+                <a href="/subscribe">Subscribe</a>
+                <a href="/blog">Blog</a>
+                <a href="/about">About</a>
+            </div>
+            <div class="countdown">
+                <p id="countdown" class="countdown">??:??:??</p>
+            </div>
+            <div class="right-buttons">
+                <a href="https://discord.gg/a7cZhpFMgk">
+                    <img src="assets/svgs/discord.svg" alt="Discord server" title="Discord server" class="social-logo">
+                </a>
+                <a href="https://github.com/gaming-gaming/Word-of-the-Day">
+                    <img src="assets/svgs/github.svg" alt="GitHub repository" title="GitHub repository" class="social-logo">
+                </a>
+                <span class="nav-divider"></span>
+                <img src="assets/svgs/theme.svg" alt="Toggle theme" class="theme-toggle" title="Toggle theme" id="theme-toggle" onclick="toggleTheme()">
+                <script src="scripts/toggle-theme.js"></script>
+            </div>
+        </div>
+    </div>
+
+    <div class="top-header first-top-header">
+        <h1>Subscribe to Word of the Day</h1>
+        <p>It's literally free. No asterisk.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="subscribe-container">
+        <div class="card-subscribe">
+            <div class="header">
+                <h2>Subscribe via Email</h2>
+            </div>
+            <div class="logo-email">
+                <img src="assets/svgs/email.svg" alt="Email logo" class="email-logo">
+            </div>
+            <div class="subscribe-form">
+                <div class="email-subscribe">
+                    <input type="email" placeholder="Enter your email" class="email-input" required>
+                    <button type="submit" class="subscribe-button">Add</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-subscribe">
+            <div class="header">
+                <h2>Subscribe via Discord</h2>
+            </div>
+            <div class="logo-discord">
+                <img src="assets/svgs/discord.svg" alt="Discord logo" class="discord-logo">
+            </div>
+            <div class="button-container">
+                <div class="button" onclick="window.open('https://discord.gg/a7cZhpFMgk', '_blank')">
+                    <a>Join server</a>
+                </div>
+                <div class="button" onclick="window.open('https://discord.com/oauth2/authorize?client_id=1322109562119000149&permissions=274878184512&integration_type=0&scope=bot', '_blank')">
+                    <a>Add bot</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-subscribe">
+            <div class="header">
+                <h2>Subscribe via Telegram</h2>
+            </div>
+            <div class="logo-telegram">
+                <img src="assets/svgs/telegram.svg" alt="Telegram logo" class="telegram-logo">
+            </div>
+            <div class="card-text">
+                <p>Coming soon!</p>
+            </div>
+        </div>
+    </div>
+
+    <a class="bottom-text">More ways to subscribe coming soon!</a>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <p>&copy; 2025 WOTD</p>
+            </div>
+            <div class="footer-right">
+                <a href="/about">About</a>
+                <a href="/api">API</a>
+                <a href="/contact">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+<script src="js/countdown.js"></script>
+</html>

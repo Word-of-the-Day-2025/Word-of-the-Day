@@ -1,18 +1,23 @@
 import asyncio
+import colorama
 import datetime
 from dateutil import tz
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 import json
+import math
 import os
 import pytz
+import re
+import shlex
 import sqlite3
 import threading
 
-from api import query_wotd
-from databases import add_word, is_subscribed_discord_guild, is_subscribed_discord_private, subscribe_discord, unsubscribe_discord, WORDS_DB, SUBSCRIBERS_DISCORD_DB
-from wotd import query_queued
+from databases import add_word, WORDS_DB
+from .subscribers import is_subscribed_discord_guild, is_subscribed_discord_private, subscribe_discord, unsubscribe_discord, SUBSCRIBERS_DB
+from wotd import query_queued, query_wotd
+
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ADMINS_JSON = os.path.join(BASE_DIR, 'admins.json')
@@ -186,10 +191,16 @@ async def query(ctx):
     # Query the word of the day
     word, ipa, type, definition, date = query_wotd()
 
+    # If the word of the day has not been set yet, return
+    if not word:
+        await ctx.send('The Word of the Day has not been set yet.')
+        return
+
     # Send the Word of the Day to every subscriber
     date = date.split('-')
     month = date[1]
-    day = date[0]
+    month = datetime.date(2000, int(month), 1).strftime('%B')  # Convert the month number to the month name
+    day = date[0].lstrip('0')
     year = date[2]
     if day[-1] == '1' and day != '11':
         day += 'st'
@@ -243,10 +254,53 @@ async def sql(ctx, *, sql_query: str):  # A command that executes unrestricted a
         conn.close()
 
         # Inform the user that the query was successful
-        await ctx.send(f'SQL query executed successfully:\n```{sql_query}```')
+        await ctx.send(f'SQL query executed successfully:\n```sql\n{sql_query}```')
 
     except sqlite3.Error as e:
         await ctx.send(f'An error occurred while executing the SQL query:\n```{e}```')
+
+@client.command()
+async def append(ctx, *, args: str):
+    '''Append a word to the database.'''
+
+    if ctx.author.id not in ADMINS:
+        return
+
+    # Regular expression to match arguments surrounded by quotes
+    pattern = r'(["\'])(?:(?=(\\?))\2.)*?\1'
+    matches = re.findall(pattern, args)
+
+    if len(matches) != 4:
+        await ctx.send('Invalid arguments. Please provide the word, IPA, type, and definition surrounded by quotes.')
+        return
+
+    lexer = shlex.shlex(args, posix=True)
+    lexer.whitespace_split = True
+    lexer.quotes = '"\''
+    lexer.escapedquotes = '"\''
+    word, ipa, type, definition = list(lexer)
+    print(word, ipa, type, definition)
+
+    # Check for if the word already exists in the database
+    conn = sqlite3.connect(WORDS_DB)
+    c = conn.cursor()
+    c.execute('SELECT * FROM words WHERE word = ?', (word,))
+    if c.fetchone():
+        await ctx.send(f'The word "{word}" already exists in the database.')
+        return
+    conn.close()
+
+    # Append the word to the database
+    add_word(word, ipa, type, definition, False)
+
+    # Inform the user that the word was successfully appended
+    await ctx.send(f'''
+The word "{word}" has been successfully appended to the database:
+- Word: {word}
+- IPA: {ipa}
+- Type: {type}
+- Definition: {definition}
+    ''')
 
 @client.command()
 async def query_next(ctx):
@@ -255,8 +309,8 @@ async def query_next(ctx):
     if ctx.author.id not in ADMINS:
         return
 
-    word, ipa, type, definition, date = query_queued()
-    await ctx.send(f'The next word in the queue is "{word}" ({ipa}), which is defined as: ({type}) {definition}')
+    queued_word, queued_ipa, queued_type, queued_definition, queued_date = query_queued()
+    await ctx.send(f'The next word in the queue is "{queued_word}" ({queued_ipa}), which is defined as: ({queued_type}) {queued_definition}')
 
 async def update_activity():
     while True:
@@ -274,10 +328,18 @@ async def update_activity():
 
         # Calculate the sleep duration until the next minute and the total duration until 8:00 AM PST
         sleep_duration = (next_8am_pst - now).total_seconds()
+        countdown = math.ceil(sleep_duration / 60)
+        countdown = '{:,}'.format(countdown)
+        if countdown == '1':
+            activity_state = f'Next word in {countdown} minute.'
+        elif countdown == '1,440':
+            activity_state = f'Word of the Day: {query_queued()[0]}'
+        else:
+            activity_state = f'Next word in {countdown} minutes.'
         activity = discord.Activity(
             name='WOTD',
             type=discord.ActivityType.custom,
-            state=f'Next word in {int(sleep_duration // 60)} minutes'  # Display the countdown in minutes
+            state=activity_state
         )
         await client.change_presence(activity=activity)  # Update the bot's activity status
 
@@ -301,12 +363,12 @@ async def send_wotd():
         await asyncio.sleep(sleep_duration)
 
         # Query the word of the day
-        word, ipa, type, definition, date = query_queued()
+        queued_word, queued_ipa, queued_type, queued_definition, queued_date = query_queued()
 
         # Send the Word of the Day to every subscriber
         utc_now = datetime.datetime.now(pytz.utc)
         month = utc_now.strftime('%B')
-        day = utc_now.strftime('%d')
+        day = utc_now.strftime('%d').lstrip('0')
         year = utc_now.strftime('%Y')
         if day[-1] == '1' and day != '11':
             day += 'st'
@@ -317,22 +379,51 @@ async def send_wotd():
         else:
             day += 'th'
         date = f'{month} {day}, {year}'
-        message = f'Today is {date}, and the Word of the Day is "{word}" ({ipa}), which is defined as: ({type}) {definition}'
+        message = f'Today is {date}, and the Word of the Day is "{queued_word}" ({queued_ipa}), which is defined as: ({queued_type}) {queued_definition}'
 
-        conn = sqlite3.connect(SUBSCRIBERS_DISCORD_DB)
+        conn = sqlite3.connect(SUBSCRIBERS_DB)
         c = conn.cursor()
-        c.execute('SELECT * FROM subscribers_discord')
+        c.execute('SELECT * FROM subscribers')
         subscribers = c.fetchall()
         conn.close()
         for subscriber in subscribers:
-            if subscriber[1] == 'private':
-                user = await client.fetch_user(subscriber[2])
-                dm_channel = await user.create_dm()
-                await dm_channel.send(message)
-            elif subscriber[1] == 'guild':
-                guild = client.get_guild(subscriber[3])
-                channel = guild.get_channel(subscriber[4])
-                await channel.send(message)
+            try:
+                if subscriber[1] == 'private':
+                    user = await client.fetch_user(subscriber[2])
+                    dm_channel = await user.create_dm()
+                    await dm_channel.send(message)
+                elif subscriber[1] == 'guild':
+                    guild = client.get_guild(subscriber[3])
+                    channel = guild.get_channel(subscriber[4])
+                    await channel.send(message)
+            except:  # Catch all exceptions
+                await asyncio.sleep(5)
+                # Retry sending the message
+                if subscriber[1] == 'private':
+                    user = await client.fetch_user(subscriber[2])
+                    dm_channel = await user.create_dm()
+                    await dm_channel.send(message)
+                elif subscriber[1] == 'guild':
+                    guild = client.get_guild(subscriber[3])
+                    channel = guild.get_channel(subscriber[4])
+                    await channel.send(message)
+            '''
+            except discord.HTTPException as e:
+                if e.code == 40003:
+                    retry_after = e.retry_after if hasattr(e, 'retry_after') else 5
+                    await asyncio.sleep(retry_after)
+                    # Retry sending the message
+                    if subscriber[1] == 'private':
+                        user = await client.fetch_user(subscriber[2])
+                        dm_channel = await user.create_dm()
+                        await dm_channel.send(message)
+                    elif subscriber[1] == 'guild':
+                        guild = client.get_guild(subscriber[3])
+                        channel = guild.get_channel(subscriber[4])
+                        await channel.send(message)
+                else:
+                    print(e)
+            '''
 
 def run_client():
     client.run(TOKEN)

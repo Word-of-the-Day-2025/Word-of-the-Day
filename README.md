@@ -1,10 +1,10 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/gaming-gaming/WOTD-Brand-Assets/9fb8cad000467ea2c65a592ed95b53bc3270e292/logos/accent/wotd-logo.svg" width="50%">
+  <img src="https://raw.githubusercontent.com/gaming-gaming/WOTD-Brand-Assets/f40370d86033b57b4e4563bffbf717bddf80960f/wotd-logo.svg" width="50%">
 </p>
 
 # Word of the Day
-[![Version](https://img.shields.io/badge/Version-1.1.0-%231976d2.svg)](https://github.com/gaming-gaming/Word-of-the-Day/releases/)
-[![License](https://raw.githubusercontent.com/gaming-gaming/WOTD-Brand-Assets/9fb8cad000467ea2c65a592ed95b53bc3270e292/badges/License-Apache%202.0-gradient.svg)](LICENSE)
+[![Version](https://img.shields.io/badge/Version-1.0.0-%233498db)](https://github.com/gaming-gaming/Word-of-the-Day/releases/)
+[![License](https://raw.githubusercontent.com/gaming-gaming/WOTD-Brand-Assets/67b4289fd47bca62c3b1bbb98ce11c78173afbe9/License-Apache%202.0-gradient.svg)](LICENSE)
 
 **Word of the Day (WOTD)** is a service for providing a unique and interesting word every day via website and communication services.
 The code is completely free to use and open-source under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).

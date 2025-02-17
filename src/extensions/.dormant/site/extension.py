@@ -2,12 +2,20 @@ import asyncio
 import datetime
 from dateutil import tz
 from flask import Flask, jsonify, send_from_directory
+import json
 import os
 import threading
 
 from wotd import query_queued
 
-app = Flask(__name__, static_folder='../www', static_url_path='')
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+CONFIG_FILE = os.path.join(BASE_DIR, 'config.json')
+
+with open(CONFIG_FILE, 'r') as f:
+    config = json.load(f)
+    PORT = config['port']
+
+app = Flask(__name__, static_folder='www', static_url_path='')
 
 global word
 global ipa
@@ -20,6 +28,13 @@ ipa = ''
 type = ''
 definition = ''
 date = ''
+
+# Test the word of the day
+word = 'sesquipedalian'
+ipa = '/ˌsɛs.kwɪ.pɪˈdeɪ.lɪ.ən/'
+type = 'Adjective'
+definition = '(of a word or words) Long; polysyllabic.'
+date = '01-01-2035'
 
 def run_asyncio_loop(loop):
     asyncio.set_event_loop(loop)
@@ -54,6 +69,11 @@ def query_wotd():
 @app.route('/')
 def index():
     return send_from_directory(os.path.join(app.static_folder), 'index.html')
+
+# Subscribe page
+@app.route('/subscribe')
+def subscribe():
+    return send_from_directory(os.path.join(app.static_folder), 'subscribe.html')
 
 @app.route('/api/wotd', methods=['GET'])
 def get_word_of_the_day():
@@ -92,7 +112,7 @@ def get_date():
     return jsonify({'date': date})
 
 def run_api():
-    app.run(host='0.0.0.0', port=80)
+    app.run(host='0.0.0.0', port=PORT)
 
 update_wotd_loop = asyncio.new_event_loop()
 update_wotd_thread = threading.Thread(target=run_asyncio_loop, args=(update_wotd_loop,))

@@ -1,0 +1,146 @@
+<!-- 
+Hey! Sorry for the inconsistencies and lack of conventions in the web code, I suck at web development.
+Please contribute to this project on GitHub if it really bothers you!
+- Gaming Gaming (@gaming-gaming)
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word of the Day</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="The Word of the Day, every day at 4:00 PM UTC.">
+    <!-- Meta tags for (not SEO) unblocking my domain on school networks. That's why you don't see anything about entertainment or fun here. -->
+    <meta name="keywords" content="vocabulary, education, learning, language, dictionary">
+    <meta name="author" content="Word of the Day">
+</head>
+<body>
+    <div class="top-bar">
+        <div class="top-bar-content">
+            <div class="left-links">
+                <a href="/">
+                    <img src="assets/svgs/wotd.svg" alt="WOTD" class="logo-left">
+                </a>
+                <span class="nav-divider"></span>
+                <a href="/subscribe">Subscribe</a>
+                <a href="/blog">Blog</a>
+                <a href="/about">About</a>
+            </div>
+            <div class="countdown">
+                <p id="countdown" class="countdown">??:??:??</p>
+            </div>
+            <div class="right-buttons">
+                <a href="https://discord.gg/a7cZhpFMgk">
+                    <img src="assets/svgs/discord.svg" alt="Discord server" title="Discord server" class="social-logo">
+                </a>
+                <a href="https://github.com/gaming-gaming/Word-of-the-Day">
+                    <img src="assets/svgs/github.svg" alt="GitHub repository" title="GitHub repository" class="social-logo">
+                </a>
+                <span class="nav-divider"></span>
+                <img src="assets/svgs/theme.svg" alt="Toggle theme" class="theme-toggle" title="Toggle theme" id="theme-toggle" onclick="toggleTheme()">
+                <script src="scripts/toggle-theme.js"></script>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card for current WOTD -->
+    <div class="card">
+        <div class="card-content">
+            <h1 id="word" class="word">
+                <!-- Word will be inserted dynamically -->
+                sesquipedalian
+                <span id="word-type" class="word-type word-type-noun">Noun</span>
+            </h1>
+            <p id="ipa" class="ipa">
+                <!-- IPA will be inserted dynamically -->
+                /ˌsɛs.kwɪ.pɪˈdeɪ.lɪ.ən/
+                <span><img src="assets/svgs/pronunciation.svg" alt="Pronunciation" class="pronunciation"></span>
+            </p>
+            <p id="definition" class="definition">
+                <!-- Definition will be inserted dynamically -->
+                A person who uses long words.
+            </p>
+            <p id="date" class="date">
+                <!-- Date will be inserted dynamically -->
+                January 1st, 2025
+            </p>
+        </div>
+    </div>
+
+    <!-- Divider below the card -->
+    <div class="divider"></div>
+
+    <!-- Card for yesterday's WOTD below the divider -->
+    <div class="card card-previous">
+        <div class="card-content">
+            <h1 id="word" class="word">
+                tintinnabulation
+                <span id="word-type" class="word-type word-type-noun">Noun</span>
+            </h1>
+            <p id="ipa" class="ipa">
+                /ˌtɪntɪnˌnæbjəˈleɪʃən/
+                <span><img src="assets/svgs/pronunciation.svg" alt="Pronunciation" class="pronunciation"></span>
+            </p>
+            <p id="definition" class="definition">A tinkling sound, as of a bell or of breaking glass.</p>
+            <p id="date" class="date">February 6th, 2025</p>
+        </div>
+    </div>
+
+    <!-- Card for yesterday's WOTD below the divider -->
+    <div class="card card-previous">
+        <div class="card-content">
+            <h1 id="word" class="word">
+                equinox
+                <span id="word-type" class="word-type word-type-noun">Noun</span>
+            </h1>
+            <p id="ipa" class="ipa">
+                /ˈɛkwɪnɒks/
+                <span><img src="assets/svgs/pronunciation.svg" alt="Pronunciation" class="pronunciation"></span>
+            </p>
+            <p id="definition" class="definition">One of two times in the year (one in March and the other in September) when the length of the day and the night are equal, which occurs when the sun is directly overhead at the equator; this marks the beginning of spring in one hemisphere and autumn in the other.</p>
+            <p id="date" class="date">January 26th, 2025</p>
+        </div>
+    </div>
+
+    <!-- Card for yesterday's WOTD below the divider -->
+    <div class="card card-previous">
+        <div class="card-content">
+            <h1 id="word" class="word">
+                pneumonoultramicroscopicsilicovolcanoconiosis
+                <span id="word-type" class="word-type word-type-noun">Noun</span>
+            </h1>
+            <p id="ipa" class="ipa">
+                /njuːˌmɒ.nəʊ.ʌl.tɹə.maɪ.kɹəʊˈskɒ.pɪkˌsɪ.lɪ.kəʊ.vɒl.keɪ.nəʊ.kəʊ.niˈəʊ.sɪs/
+                <span><img src="assets/svgs/pronunciation.svg" alt="Pronunciation" class="pronunciation"></span>
+            </p>
+            <p id="definition" class="definition">(nonce word) A disease of the lungs, allegedly caused by inhaling microscopic silicate particles originating from the eruption of a volcano.</p>
+            <p id="date" class="date">January 9th, 2025</p>
+        </div>
+    </div>
+
+    <!-- Load more button -->
+    <div class="load-more">
+        <button id="load-more" class="load-more-button">Load More</button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <p>&copy; 2025 WOTD</p>
+            </div>
+            <div class="footer-right">
+                <a href="/about">About</a>
+                <a href="/api">API</a>
+                <a href="/contact">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+<script src="js/countdown.js"></script>
+<script src="js/fetch-wotd.js"></script>
+</html>

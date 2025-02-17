@@ -1,5 +1,6 @@
 import asyncio
 import datetime
+from dateutil import tz
 import pytz
 import sqlite3
 import threading
@@ -13,19 +14,25 @@ global type
 global definition
 global date
 
+global queued_word
+global queued_ipa
+global queued_type
+global queued_definition
+global queued_date
+
 word = ''
 ipa = ''
 type = ''
 definition = ''
 date = ''
 
-async def word_of_the_day():
+async def queue_wotd():
     # Make the variables global
-    global word
-    global ipa
-    global type
-    global definition
-    global date
+    global queued_word
+    global queued_ipa
+    global queued_type
+    global queued_definition
+    global queued_date
 
     # Get the word of the day
     while True:
@@ -40,10 +47,10 @@ async def word_of_the_day():
         conn.close()
 
         # Set the word of the day variables
-        word = entry[1]
-        ipa = entry[2]
-        type = entry[3]
-        definition = entry[4]
+        queued_word = entry[1]
+        queued_ipa = entry[2]
+        queued_type = entry[3]
+        queued_definition = entry[4]
 
         # Find out what the date will be next 8:00 AM PST
         utc_now = datetime.datetime.now(datetime.timezone.utc)
@@ -53,7 +60,7 @@ async def word_of_the_day():
             next_8am = pacific_now.replace(hour=8, minute=0, second=0, microsecond=0) + datetime.timedelta(days=1)
         else:
             next_8am = pacific_now.replace(hour=8, minute=0, second=0, microsecond=0)
-        date = next_8am.strftime('%d-%m-%Y')
+        queued_date = next_8am.strftime('%d-%m-%Y')
 
         # Set the word at 12:00 AM UTC (4:00PM PST, but only update the Word of the Day at 8:00 AM PST)
         now = datetime.datetime.now(datetime.timezone.utc)
@@ -62,10 +69,35 @@ async def word_of_the_day():
         await asyncio.sleep(sleep_duration)
 
 def query_queued():
+    global queued_word
+    global queued_ipa
+    global queued_type
+    global queued_definition
+    global queued_date
+
+    return queued_word, queued_ipa, queued_type, queued_definition, queued_date
+
+async def update_wotd():
     global word
     global ipa
     global type
     global definition
     global date
 
+    while True:
+        # Wait for 8:00 AM PST
+        now = datetime.datetime.now(datetime.timezone.utc)
+        pst = tz.gettz('America/Los_Angeles')
+        current_pst = now.astimezone(pst)
+        next_8am_pst = current_pst.replace(hour=8, minute=0, second=0, microsecond=0)
+        if current_pst >= next_8am_pst:
+            next_8am_pst += datetime.timedelta(days=1)
+        sleep_duration = (next_8am_pst - now).total_seconds()
+        await asyncio.sleep(sleep_duration)
+
+        # Update the word of the day
+        word, ipa, type, definition, date = query_queued()
+
+def query_wotd():
+    '''Queries the word of the day.'''
     return word, ipa, type, definition, date
