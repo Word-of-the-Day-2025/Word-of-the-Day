@@ -235,31 +235,6 @@ async def nuke(ctx):
                 await message.delete()
 
 @client.command()
-async def sql(ctx, *, sql_query: str):  # A command that executes unrestricted arbitrary SQL code, what could possibly go wrong?
-    '''Used to append words to the database.'''
-
-    # Only allow admins to execute SQL queries
-    if ctx.author.id not in ADMINS:
-        return
-
-    try:
-        conn = sqlite3.connect(WORDS_DB)
-        cursor = conn.cursor()
-
-        # Execute the SQL query
-        cursor.execute(sql_query)
-
-        # Commit changes and close the connection
-        conn.commit()
-        conn.close()
-
-        # Inform the user that the query was successful
-        await ctx.send(f'SQL query executed successfully:\n```sql\n{sql_query}```')
-
-    except sqlite3.Error as e:
-        await ctx.send(f'An error occurred while executing the SQL query:\n```{e}```')
-
-@client.command()
 async def append(ctx, *, args: str):
     '''Append a word to the database.'''
 
