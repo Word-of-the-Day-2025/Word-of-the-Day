@@ -19,16 +19,17 @@ By default, all extensions (in `./src/extensions`) are placed in the `.dormant` 
 
 ### Hosting
 
-#### Option 1: Running from Source
+#### Windows:
 ```bash
 git clone https://github.com/gaming-gaming/Word-of-the-Day.git
 cd Word-of-the-Day
 pip install -r requirements.txt
 python main.py
 ```
-#### Option 2: Portable Version
-1. **Download** the latest `WOTD-Portable.zip` from [Releases](https://github.com/gaming-gaming/Word-of-the-Day/releases)
-2. **Extract** the folder anywhere on your computer
-3. **Run** the appropriate start script:
-    - Windows: `start_amd64.bat`, `start_x86.bat`, or `start_arm64.bat`
-    - Linux: `start_x86_x64.sh`, `start_i386.sh`, `start_arm64.sh`, or `start_armv7.sh`
+#### Linux:
+```bash
+git clone https://github.com/gaming-gaming/Word-of-the-Day.git
+cd Word-of-the-Day
+pip3 install -r requirements.txt
+python3 main.py
+```
