@@ -4,6 +4,8 @@ from dateutil import tz
 from flask import Flask, jsonify, send_from_directory
 import json
 import os
+import subprocess
+import sys
 import threading
 
 from wotd import query_queued
@@ -28,13 +30,6 @@ ipa = ''
 type = ''
 definition = ''
 date = ''
-
-# Test the word of the day
-word = 'sesquipedalian'
-ipa = '/ˌsɛs.kwɪ.pɪˈdeɪ.lɪ.ən/'
-type = 'Adjective'
-definition = '(of a word or words) Long; polysyllabic.'
-date = '01-01-2035'
 
 def run_asyncio_loop(loop):
     asyncio.set_event_loop(loop)
@@ -70,10 +65,17 @@ def query_wotd():
 def index():
     return send_from_directory(os.path.join(app.static_folder), 'index.html')
 
+# Serve the about.html file
+@app.route('/about')
+def about():
+    return send_from_directory(os.path.join(app.static_folder), 'about.html')
+
+"""
 # Subscribe page
 @app.route('/subscribe')
 def subscribe():
     return send_from_directory(os.path.join(app.static_folder), 'subscribe.html')
+"""
 
 @app.route('/api/wotd', methods=['GET'])
 def get_word_of_the_day():
@@ -111,14 +113,60 @@ def get_date():
     '''Returns the date of the word of the day.'''
     return jsonify({'date': date})
 
-def run_api():
-    app.run(host='0.0.0.0', port=PORT)
-
 update_wotd_loop = asyncio.new_event_loop()
 update_wotd_thread = threading.Thread(target=run_asyncio_loop, args=(update_wotd_loop,))
 update_wotd_thread.start()
 asyncio.run_coroutine_threadsafe(update_wotd(), update_wotd_loop)
 
-api_thread = threading.Thread(target=run_api)
-api_thread.daemon = True
-api_thread.start()
+def run():
+    from waitress import serve
+    serve(app, host='0.0.0.0', port=PORT, threads=4, backlog=128)
+
+"""
+def run():
+    if sys.platform.startswith('win'):
+        from waitress import serve
+        serve(app, host='0.0.0.0', port=PORT, threads=4, backlog=128)
+    elif sys.platform.startswith('linux'):
+        subprocess.Popen([
+            'gunicorn', 
+            '-w', '4',  # Number of workers
+            '--threads', '4',  # Number of threads per worker
+            '--backlog', '128',
+            '-b', f'0.0.0.0:{PORT}', 
+            f'{__name__}:app'
+        ], env={**os.environ, 'PYTHONPATH': os.path.dirname(BASE_DIR)})"
+"""
+
+'''
+# Run the server in a separate thread
+thread = threading.Thread(target=run)
+thread.daemon = True
+thread.start()
+
+# Run the asyncio event loop
+try:
+    loop = asyncio.get_running_loop()
+except RuntimeError:
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+loop.run_forever()
+'''
+
+# Run the server in a separate thread
+server_thread = threading.Thread(target=run)
+server_thread.daemon = True
+server_thread.start()
+
+# Run the asyncio event loop in a separate thread
+def start_asyncio_loop():
+    try:
+        loop = asyncio.get_running_loop()
+    except RuntimeError:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+    loop.run_forever()
+
+asyncio_thread = threading.Thread(target=start_asyncio_loop)
+asyncio_thread.daemon = True
+asyncio_thread.start()

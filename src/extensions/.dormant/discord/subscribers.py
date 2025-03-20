@@ -4,11 +4,11 @@ import sqlite3
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 SUBSCRIBERS_DB = os.path.join(BASE_DIR, 'subscribers.db')
 
-def create_subscribers_discord_table():
+def create_subscribers_table():
     conn = sqlite3.connect(SUBSCRIBERS_DB)
     c = conn.cursor()
     c.execute('''
-        CREATE TABLE IF NOT EXISTS subscribers_discord (
+        CREATE TABLE IF NOT EXISTS subscribers (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             type TEXT NOT NULL,
             user_id INTEGER,
@@ -23,7 +23,7 @@ def create_subscribers_discord_table():
     conn.close()
 
 def subscribe_discord(type: str, user_id: int, guild_id: int, channel_id: int, time: str, format: str, silent: bool = False):
-    create_subscribers_discord_table()  # Ensure the table exists
+    create_subscribers_table()  # Ensure the table exists
     conn = sqlite3.connect(SUBSCRIBERS_DB)
     c = conn.cursor()
     c.execute('''
@@ -53,7 +53,7 @@ def unsubscribe_discord(type: str, user_id: int = None, guild_id: int = None, ch
     conn.commit()
     conn.close()
 
-def is_subscribed_discord_private(user_id):
+def is_subscribed_private(user_id):
     conn = sqlite3.connect(SUBSCRIBERS_DB)
     c = conn.cursor()
     c.execute('SELECT * FROM subscribers WHERE user_id = ?', (user_id,))
@@ -61,7 +61,7 @@ def is_subscribed_discord_private(user_id):
     conn.close()
     return result is not None
 
-def is_subscribed_discord_guild(guild_id, channel_id):
+def is_subscribed_guild(guild_id, channel_id):
     conn = sqlite3.connect(SUBSCRIBERS_DB)
     c = conn.cursor()
     c.execute('SELECT * FROM subscribers WHERE guild_id = ? AND channel_id = ?', (guild_id, channel_id))
@@ -70,4 +70,4 @@ def is_subscribed_discord_guild(guild_id, channel_id):
     return result is not None
 
 if os.path.getsize(SUBSCRIBERS_DB) == 0:
-    create_subscribers_discord_table()
+    create_subscribers_table()

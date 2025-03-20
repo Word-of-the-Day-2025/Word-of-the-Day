@@ -3,6 +3,7 @@ import colorama
 import datetime
 from dateutil import tz
 import discord
+from discord import app_commands
 from discord.ext import commands
 from dotenv import load_dotenv
 import json
@@ -15,17 +16,21 @@ import sqlite3
 import threading
 
 from databases import add_word, WORDS_DB
-from .subscribers import is_subscribed_discord_guild, is_subscribed_discord_private, subscribe_discord, unsubscribe_discord, SUBSCRIBERS_DB
+from .subscribers import is_subscribed_guild, is_subscribed_private, subscribe_discord, unsubscribe_discord, SUBSCRIBERS_DB
 from wotd import query_queued, query_wotd
 
+colorama.init()
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-ADMINS_JSON = os.path.join(BASE_DIR, 'admins.json')
+CONFIG_JSON = os.path.join(BASE_DIR, 'config.json')
+RATE_LIMIT = 45  # Requests allowed per second (slightly below the 50 requests per second limit)
+semaphore = asyncio.Semaphore(RATE_LIMIT)
 
 # Get the list of admins who are allowed to use special commands from the json file
-with open(ADMINS_JSON, 'r') as f:
-    ADMINS = json.load(f)
-ADMINS = set(ADMINS['admins'])  # Reusing the variable here
+with open(CONFIG_JSON, 'r') as f:
+    CONFIG_JSON = json.load(f)  # Reusing the variable lol
+ADMINS = set(CONFIG_JSON['admins'])
+MAX_SUBSCRIPTIONS_PER_GUILD = CONFIG_JSON['maxSubscriptionsPerGuild']
 
 # Load the bot token
 DOTENV_PATH = os.path.join(BASE_DIR, '.env')
@@ -38,79 +43,94 @@ intents.message_content = True
 client = commands.Bot(command_prefix='! ', intents=intents)
 client.remove_command('help')
 
-# TODO: Make all commands slash commands
-
 subscribe_private_embed = discord.Embed(
     title='<:steamhappy:1322121693510242314> **Subscribed** to Word of the Day!',
     description='''You will now receive the Word of the Day every day at <t:0:t>.
-    To configure settings, send `! config`.
-    To unsubscribe, send `! unsubscribe`.''',
+    To configure settings, send `/config`.
+    To unsubscribe, send `/unsubscribe`.''',
     color=discord.Color.gold()
 )
 subscribe_guild_embed = discord.Embed(
     title='<:steamhappy:1322121693510242314> **Subscribed** to Word of the Day!',
     description='''This channel will now receive the Word of the Day every day at <t:0:t>.
-    To configure settings, send `! config`.
-    To unsubscribe, send `! unsubscribe`.''',
+    To configure settings, send `/config`.
+    To unsubscribe, send `/unsubscribe`.''',
     color=discord.Color.gold()
 )
 unsubscribe_private_embed = discord.Embed(
     title='<:steamsad:1322121721649561682> **Unsubscribed** from Word of the Day.',
     description='''You will no longer receive the Word of the Day.
-    To subscribe again, send `! subscribe`.''',
+    To subscribe again, send `/subscribe`.''',
     color=discord.Color.blue()
 )
 unsubscribe_guild_embed = discord.Embed(
     title='<:steamsad:1322121721649561682> **Unsubscribed** from Word of the Day.',
     description='''This channel will no longer receive the Word of the Day.
-    To subscribe again, send `! subscribe`.''',
+    To subscribe again, send `/subscribe`.''',
     color=discord.Color.blue()
 )
 subscribed_already_private_embed = discord.Embed(
     title='<:steamdance:1322121672224145438> You\'re already subscribed!',
     description='''You are already subscribed to the Word of the Day.
-    To configure settings, send `! config`.
-    To unsubscribe, send `! unsubscribe`.''',
+    To configure settings, send `/config`.
+    To unsubscribe, send `/unsubscribe`.''',
     color=discord.Color.pink()
 )
 subscribed_already_guild_embed = discord.Embed(
     title='<:steamdance:1322121672224145438> This channel is already subscribed!',
     description='''This channel is already subscribed to the Word of the Day.
-    To configure settings, send `! config`.
-    To unsubscribe, send `! unsubscribe`.''',
+    To configure settings, send `/config`.
+    To unsubscribe, send `/unsubscribe`.''',
     color=discord.Color.pink()
 )
 unsubscribed_already_private_embed = discord.Embed(
     title='<:steamdeadpan:1322121678712737872> You\'re already unsubscribed.',
     description='''You are already unsubscribed from the Word of the Day.
-    To subscribe again, send `! subscribe`.''',
+    To subscribe again, send `/subscribe`.''',
     color=discord.Color.dark_purple()
 )
 unsubscribed_already_guild_embed = discord.Embed(
     title='<:steamdeadpan:1322121678712737872> This channel is already unsubscribed.',
     description='''This channel is already unsubscribed from the Word of the Day.
-    To subscribe again, send `! subscribe`.''',
+    To subscribe again, send `/subscribe`.''',
     color=discord.Color.dark_purple()
 )
 
 @client.event
 async def on_ready():
+    await client.tree.sync()  # Sync the slash commands
     client.loop.create_task(update_activity())
     client.loop.create_task(send_wotd())
 
 async def unsubscribe_button_callback(interaction: discord.Interaction):
     if interaction.channel.type == discord.ChannelType.private:
-        if is_subscribed_discord_private(interaction.user.id):
+        if is_subscribed_private(interaction.user.id):
             unsubscribe_discord('private', interaction.user.id)
-            await interaction.response.send_message(embed=unsubscribe_private_embed)
+            await interaction.response.send_message(embed=unsubscribe_private_embed, ephemeral=True)
         else:
-            await interaction.response.send_message(embed=unsubscribed_already_private_embed)
+            await interaction.response.send_message(embed=unsubscribed_already_private_embed, ephemeral=True)
     elif interaction.user.guild_permissions.administrator:
-        if is_subscribed_discord_guild(interaction.guild.id, interaction.channel.id):
+        if is_subscribed_guild(interaction.guild.id, interaction.channel.id):
             unsubscribe_discord('guild', None, interaction.guild.id, interaction.channel.id)
-            await interaction.response.send_message(embed=unsubscribe_guild_embed)
+            await interaction.response.send_message(embed=unsubscribe_guild_embed, ephemeral=True)
         else:
-            await interaction.response.send_message(embed=unsubscribed_already_guild_embed)
+            await interaction.response.send_message(embed=unsubscribed_already_guild_embed, ephemeral=True)
+    else:
+        await interaction.response.send_message('You do not have permission to do this.', ephemeral=True)
+
+async def subscribe_button_callback(interaction: discord.Interaction):
+    if interaction.channel.type == discord.ChannelType.private:
+        if is_subscribed_private(interaction.user.id):
+            await interaction.response.send_message(embed=subscribed_already_private_embed, ephemeral=True)
+        else:
+            subscribe_discord('private', interaction.user.id, None, None, '00:00', 'MDY')
+            await interaction.response.send_message(embed=subscribe_private_embed, ephemeral=True)
+    elif interaction.user.guild_permissions.administrator:
+        if is_subscribed_guild(interaction.guild.id, interaction.channel.id):
+            await interaction.response.send_message(embed=subscribed_already_guild_embed, ephemeral=True)
+        else:
+            subscribe_discord('guild', None, interaction.guild.id, interaction.channel.id, '00:00', 'MDY')
+            await interaction.response.send_message(embed=subscribe_guild_embed, ephemeral=True)
     else:
         await interaction.response.send_message('You do not have permission to do this.', ephemeral=True)
 
@@ -118,27 +138,33 @@ async def unsubscribe_button_callback(interaction: discord.Interaction):
 async def configure_button_callback(interaction: discord.Interaction):
     if not interaction.channel.type == discord.ChannelType.private and not interaction.user.guild_permissions.administrator:
         await interaction.response.send_message('You do not have permission to do this.', ephemeral=True)
-    await interaction.response.send_message('Configuration options will be available soon.')
+    await interaction.response.send_message('Configuration options will be available soon.', ephemeral=True)
 
-@client.command()
-async def subscribe(ctx):
-    '''Subscribe to the Word of the Day.'''
-
-    if ctx.channel.type == discord.ChannelType.private:  # If the command was sent in a DM
-        await ctx.channel.typing()  # Show that the bot is typing
-        if is_subscribed_discord_private(ctx.author.id):
+@client.tree.command(name='subscribe', description='Subscribe to the Word of the Day.')
+async def subscribe(interaction: discord.Interaction):
+    if interaction.channel.type == discord.ChannelType.private:  # If the command was sent in a DM
+        if is_subscribed_private(interaction.user.id):
             embed = subscribed_already_private_embed
         else:
-            subscribe_discord('private', ctx.author.id, None, None, '00:00', 'MDY')
+            subscribe_discord('private', interaction.user.id, None, None, '00:00', 'MDY')
             embed = subscribe_private_embed
-    elif ctx.channel.type == discord.ChannelType.text or ctx.channel.type == discord.ChannelType.news:  # If the command was sent in a guild
-        if not ctx.author.guild_permissions.administrator:
+    elif interaction.channel.type == discord.ChannelType.text or interaction.channel.type == discord.ChannelType.news:  # If the command was sent in a guild
+        if not interaction.user.guild_permissions.administrator:
+            await interaction.response.send_message('You do not have permission to do this.', ephemeral=True)
             return
-        await ctx.channel.typing()  # Show that the bot is typing
-        if is_subscribed_discord_guild(ctx.guild.id, ctx.channel.id):
+        if is_subscribed_guild(interaction.guild.id, interaction.channel.id):
             embed = subscribed_already_guild_embed
         else:
-            subscribe_discord('guild', None, ctx.guild.id, ctx.channel.id, '00:00', 'MDY')
+            # Check if the guild has reached the maximum number of channels subscribed to the Word of the Day
+            conn = sqlite3.connect(SUBSCRIBERS_DB)
+            c = conn.cursor()
+            c.execute('SELECT * FROM subscribers WHERE guild_id = ?', (interaction.guild.id,))
+            channels = c.fetchall()
+            conn.close()
+            if len(channels) >= MAX_SUBSCRIPTIONS_PER_GUILD:
+                await interaction.response.send_message('This server has reached the maximum number of channels subscribed to the Word of the Day.', ephemeral=True)
+                return
+            subscribe_discord('guild', None, interaction.guild.id, interaction.channel.id, '00:00', 'MDY')
             embed = subscribe_guild_embed
     else:
         return
@@ -159,41 +185,53 @@ async def subscribe(ctx):
     configure_button.callback = configure_button_callback
     view.add_item(configure_button)
 
-    await ctx.send(embed=embed, view=view)
+    if interaction.channel.type == discord.ChannelType.private or interaction.channel.type == discord.ChannelType.text or interaction.channel.type == discord.ChannelType.news:
+        await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+    else:
+        await interaction.response.send_message(f'You cannot use this command in a {interaction.channel.type} channel.', ephemeral=True)
 
-@client.command()
-async def unsubscribe(ctx):
-    '''Unsubscribe from the Word of the Day.'''
-
-    if ctx.channel.type == discord.ChannelType.private:
-        await ctx.channel.typing()  # Show that the bot is typing
-        if not is_subscribed_discord_private(ctx.author.id):
-            await ctx.send(embed=unsubscribed_already_private_embed)
+@client.tree.command(name='unsubscribe', description='Unsubscribe from the Word of the Day.')
+async def unsubscribe(interaction: discord.Interaction):
+    if interaction.channel.type == discord.ChannelType.private:  # If the command was sent in a DM
+        if not is_subscribed_private(interaction.user.id):
+            embed = unsubscribed_already_private_embed
         else:
-            unsubscribe_discord('private', ctx.author.id, None, None)
-            await ctx.send(embed=unsubscribe_private_embed)
-    elif ctx.channel.type == discord.ChannelType.text or ctx.channel.type == discord.ChannelType.news:
-        if not ctx.author.guild_permissions.administrator:
+            unsubscribe_discord('private', interaction.user.id, None, None)
+            embed = unsubscribe_private_embed
+    elif interaction.channel.type == discord.ChannelType.text or interaction.channel.type == discord.ChannelType.news:  # If the command was sent in a guild
+        if not interaction.user.guild_permissions.administrator:
+            await interaction.response.send_message('You do not have permission to do this.', ephemeral=True)
             return
-        await ctx.channel.typing()  # Show that the bot is typing
-        if not is_subscribed_discord_guild(ctx.guild.id, ctx.channel.id):
-            await ctx.send(embed=unsubscribed_already_guild_embed)
+        if not is_subscribed_guild(interaction.guild.id, interaction.channel.id):
+            embed = unsubscribed_already_guild_embed
         else:
-            unsubscribe_discord('guild', None, ctx.guild.id, ctx.channel.id)
-            await ctx.send(embed=unsubscribe_guild_embed)
+            unsubscribe_discord('guild', None, interaction.guild.id, interaction.channel.id)
+            embed = unsubscribe_guild_embed
     else:
         return
 
-@client.command()
-async def query(ctx):
-    '''Send the Word of the Day to the user.'''
+    view = discord.ui.View()
+    subscribe_button = discord.ui.Button(
+        style=discord.ButtonStyle.gray,
+        label='Subscribe',
+        custom_id='subscribe',
+    )
+    subscribe_button.callback = subscribe_button_callback
+    view.add_item(subscribe_button)
 
+    if interaction.channel.type == discord.ChannelType.private or interaction.channel.type == discord.ChannelType.text or interaction.channel.type == discord.ChannelType.news:
+        await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+    else:
+        await interaction.response.send_message(f'You cannot use this command in a {interaction.channel.type} channel.', ephemeral=True)
+
+@client.tree.command(name='query', description='Query the current Word of the Day.')
+async def query(interaction: discord.Interaction):
     # Query the word of the day
     word, ipa, type, definition, date = query_wotd()
 
     # If the word of the day has not been set yet, return
     if not word:
-        await ctx.send('The Word of the Day has not been set yet.')
+        await interaction.response.send_message('The Word of the Day has not been set yet.', ephemeral=True)
         return
 
     # Send the Word of the Day to every subscriber
@@ -213,26 +251,13 @@ async def query(ctx):
     date = f'{month} {day}, {year}'
     message = f'Today is {date}, and the Word of the Day is "{word}" ({ipa}), which is defined as: ({type}) {definition}'
 
-    # Send the message to the user
-    await ctx.send(message)
-    
+    await interaction.response.send_message(message, ephemeral=True)
 
-@client.command()
-async def config(ctx):
-    '''Configure the Word of the Day settings.'''
+@client.tree.command(name='config', description='Configure your Word of the Day settings.')
+async def config(interaction: discord.Interaction):
+    await interaction.response.send_message('Configuration options will be available soon.', ephemeral=True)
 
-    await ctx.channel.typing()  # Show that the bot is typing
-    await ctx.send('Configuration options will be available soon.')
-
-@client.command()
-async def nuke(ctx):
-    if ctx.author.id not in ADMINS:
-        return
-    else:
-        # Delete all messages in the channel sent by the bot
-        async for message in ctx.channel.history(limit=None):
-            if message.author == client.user:
-                await message.delete()
+# Commands for bot administrators use prefix commands instead of slash commands
 
 @client.command()
 async def append(ctx, *, args: str):
@@ -285,7 +310,106 @@ async def query_next(ctx):
         return
 
     queued_word, queued_ipa, queued_type, queued_definition, queued_date = query_queued()
-    await ctx.send(f'The next word in the queue is "{queued_word}" ({queued_ipa}), which is defined as: ({queued_type}) {queued_definition}')
+    if not queued_word:
+        await ctx.send('The next Word of the Day has not been set yet.')
+        return
+    else:
+        message = f'The next word in the queue is "{queued_word}" ({queued_ipa}), which is defined as: ({queued_type}) {queued_definition}'
+    await ctx.send(message)
+
+@client.command()
+async def send_all(ctx):
+    '''Send a test message to all subscribers.'''
+
+    if ctx.author.id not in ADMINS:
+        return
+
+    message = 'This is a test message.'
+    conn = sqlite3.connect(SUBSCRIBERS_DB)
+    c = conn.cursor()
+    c.execute('SELECT * FROM subscribers')
+    subscribers = c.fetchall()
+    conn.close()
+    sent_places = []  # This is the solution to the problem of the bot sending the same message multiple times
+    async with semaphore:
+        for subscriber in subscribers:
+            if subscriber in sent_places:
+                continue
+            if subscriber[1] == 'private':
+                try:
+                    print(colorama.Fore.GREEN + f'Sending message to user {subscriber[2]}' + colorama.Style.RESET_ALL)
+                    user = await client.fetch_user(subscriber[2])
+                    dm_channel = await user.create_dm()
+                    await dm_channel.send(message)
+                    sent_places.append(subscriber)
+                except discord.errors.Forbidden:
+                    # The user blocked the bot, disabled DMs, or is no longer in the same guild
+                    print(colorama.Fore.RED + f'Unsubscribing user {subscriber[2]} due to Forbidden error' + colorama.Style.RESET_ALL)
+                    unsubscribe_discord('private', subscriber[2])
+                    continue
+                except discord.errors.NotFound:
+                    # The user no longer exists
+                    print(colorama.Fore.RED + f'Unsubscribing user {subscriber[2]} due to not existing' + colorama.Style.RESET_ALL)
+                    unsubscribe_discord('private', subscriber[2])
+                    continue
+                except discord.errors.RateLimited:
+                    # Sleep for 1 second and try again
+                    retry_after = getattr(e, 'retry_after', None)
+                    print(colorama.Fore.YELLOW + f'Sleeping for {retry_after} seconds' + colorama.Style.RESET_ALL)
+                    if retry_after:
+                        await asyncio.sleep(retry_after)
+                        try:
+                            await channel.send(message)  # Retry sending message
+                        except Exception as e:
+                            # Skip the user if an error occurs again
+                            continue
+                except Exception as e:
+                    # Skip the user if an error occurs
+                    continue
+            elif subscriber[1] == 'guild':
+                # Guild subscribers in sent_places are "{guild_id}/{channel_id}"
+                if f'{subscriber[3]}/{subscriber[4]}' in sent_places:
+                    continue
+                if not client.get_guild(subscriber[3]):
+                    # The guild no longer exists
+                    print(colorama.Fore.RED + f'Unsubscribing guild {subscriber[3]} due to not existing' + colorama.Style.RESET_ALL)
+                    unsubscribe_discord('guild', None, subscriber[3])
+                    continue
+                if not client.get_guild(subscriber[3]).get_channel(subscriber[4]):
+                    # The channel no longer exists
+                    print(colorama.Fore.RED + f'Unsubscribing guild {subscriber[3]} due to channel {subscriber[4]} not existing' + colorama.Style.RESET_ALL)
+                    unsubscribe_discord('guild', None, subscriber[3], subscriber[4])
+                    continue
+                try:
+                    print(colorama.Fore.GREEN + f'Sending message to guild {subscriber[3]}' + colorama.Style.RESET_ALL)
+                    guild = client.get_guild(subscriber[3])
+                    channel = guild.get_channel(subscriber[4])
+                    await channel.send(message)
+                    sent_places.append(f'{subscriber[3]}/{subscriber[4]}')
+                except discord.errors.NotFound:
+                    # The guild no longer exists
+                    print(colorama.Fore.RED + f'Unsubscribing guild {subscriber[3]} due to not existing' + colorama.Style.RESET_ALL)
+                    unsubscribe_discord('guild', None, subscriber[3], subscriber[4])
+                    continue
+                except discord.errors.Forbidden:
+                    # The bot no longer has permission to send messages in the channel
+                    print(colorama.Fore.RED + f'Unsubscribing guild {subscriber[3]} due to Forbidden error' + colorama.Style.RESET_ALL)
+                    unsubscribe_discord('guild', None, subscriber[3], subscriber[4])
+                    continue
+                except discord.errors.RateLimited:
+                    # Sleep for 1 second and try again
+                    retry_after = getattr(e, 'retry_after', None)
+                    print(colorama.Fore.YELLOW + f'Sleeping for {retry_after} seconds' + colorama.Style.RESET_ALL)
+                    if retry_after:
+                        await asyncio.sleep(retry_after)
+                        try:
+                            await channel.send(message)  # Retry sending message
+                        except Exception as e:
+                            # Skip the user if an error occurs again
+                            continue
+                except Exception as e:
+                    # Skip the guild if an error occurs
+                    continue
 
 async def update_activity():
     while True:
@@ -361,44 +485,68 @@ async def send_wotd():
         c.execute('SELECT * FROM subscribers')
         subscribers = c.fetchall()
         conn.close()
-        for subscriber in subscribers:
-            try:
+        sent_places = []  # This is the solution to the problem of the bot sending the same message multiple times
+        async with semaphore:
+            for subscriber in subscribers:
                 if subscriber[1] == 'private':
-                    user = await client.fetch_user(subscriber[2])
-                    dm_channel = await user.create_dm()
-                    await dm_channel.send(message)
-                elif subscriber[1] == 'guild':
-                    guild = client.get_guild(subscriber[3])
-                    channel = guild.get_channel(subscriber[4])
-                    await channel.send(message)
-            except:  # Catch all exceptions
-                await asyncio.sleep(5)
-                # Retry sending the message
-                if subscriber[1] == 'private':
-                    user = await client.fetch_user(subscriber[2])
-                    dm_channel = await user.create_dm()
-                    await dm_channel.send(message)
-                elif subscriber[1] == 'guild':
-                    guild = client.get_guild(subscriber[3])
-                    channel = guild.get_channel(subscriber[4])
-                    await channel.send(message)
-            '''
-            except discord.HTTPException as e:
-                if e.code == 40003:
-                    retry_after = e.retry_after if hasattr(e, 'retry_after') else 5
-                    await asyncio.sleep(retry_after)
-                    # Retry sending the message
-                    if subscriber[1] == 'private':
+                    if subscriber in sent_places:
+                        continue
+                    try:
                         user = await client.fetch_user(subscriber[2])
                         dm_channel = await user.create_dm()
                         await dm_channel.send(message)
-                    elif subscriber[1] == 'guild':
+                        sent_places.append(subscriber)
+                    except discord.errors.Forbidden:
+                        # The user blocked the bot, disabled DMs, or is no longer in the same guild
+                        unsubscribe_discord('private', subscriber[2])
+                        continue
+                    except discord.errors.NotFound:
+                        # The user no longer exists
+                        unsubscribe_discord('private', subscriber[2])
+                        continue
+                    except discord.errors.RateLimited:
+                        # Sleep for 1 second and try again
+                        retry_after = getattr(e, 'retry_after', None)
+                        if retry_after:
+                            await asyncio.sleep(retry_after)
+                            try:
+                                await channel.send(message)  # Retry sending message
+                            except Exception as e:
+                                # Skip the user if an error occurs again
+                                continue
+                    except Exception as e:
+                        # Skip the user if an error occurs
+                        continue
+                elif subscriber[1] == 'guild':
+                    # Guild subscribers in sent_places are "{guild_id}/{channel_id}"
+                    if f'{subscriber[3]}/{subscriber[4]}' in sent_places:
+                        continue
+                    if not client.get_guild(subscriber[3]):
+                        # The guild no longer exists
+                        unsubscribe_discord('guild', None, subscriber[3])
+                        continue
+                    try:
                         guild = client.get_guild(subscriber[3])
                         channel = guild.get_channel(subscriber[4])
                         await channel.send(message)
-                else:
-                    print(e)
-            '''
+                        sent_places.append(f'{subscriber[3]}/{subscriber[4]}')
+                    except discord.errors.NotFound:
+                        # The guild no longer exists
+                        unsubscribe_discord('guild', None, subscriber[3], subscriber[4])
+                        continue
+                    except discord.errors.RateLimited:
+                        # Sleep for 1 second and try again
+                        retry_after = getattr(e, 'retry_after', None)
+                        if retry_after:
+                            await asyncio.sleep(retry_after)
+                            try:
+                                await channel.send(message)  # Retry sending message
+                            except Exception as e:
+                                # Skip the user if an error occurs again
+                                continue
+                    except Exception as e:
+                        # Skip the guild if an error occurs
+                        continue
 
 def run_client():
     client.run(TOKEN)
@@ -406,3 +554,17 @@ def run_client():
 client_thread = threading.Thread(target=run_client)
 client_thread.daemon = True
 client_thread.start()
+
+'''
+async def run_client():
+    await client.start(TOKEN)
+
+def start_client():
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    loop.create_task(run_client())
+
+client_thread = threading.Thread(target=start_client)
+client_thread.daemon = True
+client_thread.start()
+'''

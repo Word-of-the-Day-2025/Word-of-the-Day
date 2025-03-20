@@ -6,8 +6,8 @@
     --text-color: #ffffff;
     --secondary-text-color: #787c80;
     --footer-link-color: #cad8e6;
-    --primary-color: #1976d2;
-    --primary-color-active: #2453b3;
+    --accent-color: #1976d2;
+    --accent-color-active: #2453b3;
     --scrollbar-bg: #1b1d1f;
     --scrollbar-thumb: #282b2e;
     --scrollbar-thumb-hover: #363a3d;
@@ -18,16 +18,7 @@
 [data-theme='light'] {
     --background-color: #1b1d1f;
     --text-color: #ffffff;
-    --primary-color: #1976d2;
-}
-
-/* Hot Dog Stand Theme (Override with data-theme='hotdog') */
-[data-theme='hotdog'] {
-    --background-color: #ffaa00;
-    --text-color: #000000;
-    --secondary-text-color: #000000;
-    --footer-link-color: #000000;
-    --primary-color: #ff0000;
+    --accent-color: #1976d2;
 }
 
 /* Cheesy ahh custom scrollbar */
@@ -49,6 +40,22 @@
     background: var(--scrollbar-thumb-active);
 }
 
+/* Link settings */
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+a:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+a:active {
+    color: var(--accent-color-active);
+}
+
 @font-face {
     font-family: 'DejaVu Sans';
     src: url('assets/fonts/DejaVuSans.ttf') format('truetype');
@@ -59,6 +66,12 @@
     font-family: 'DejaVu Sans';
     src: url('assets/fonts/DejaVuSans-Bold.ttf') format('truetype');
     font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'JetBrains Mono';
+    src: url('assets/fonts/JetBrainsMono-Regular.ttf') format('truetype');
+    font-weight: normal;
     font-style: normal;
 }
 
@@ -135,12 +148,14 @@ body {
 
 /* Left logo styling */
 .top-bar .logo-left {
-    fill: var(--text-color);
-    transition: fill ease 0.2s;
+    height: 24px;
+    width: auto;
+    color: var(--text-color);
+    transition: color 0.2s ease;
 }
 
 .top-bar .logo-left:hover {
-    fill: var(--primary-color);
+    color: var(--accent-color);
 }
 
 /* Left links styling, on the LEFT side of the top bar */
@@ -165,10 +180,10 @@ body {
 /* Hover effect for left links */
 .top-bar .left-links a:hover {
     text-decoration: underline;
-    color: var(--primary-color);
+    color: var(--accent-color);
 }
 .top-bar .left-links a:active {
-    color: var(--primary-color-active);
+    color: var(--accent-color-active);
 }
 
 /* Vertical divider styling */
@@ -206,7 +221,7 @@ body {
     outline-width: 2px;
     outline-offset: -1px;
     z-index: -1;
-    border-radius: 8px;
+    border-radius: 12px;
 }
 
 /* All buttons on the right side of the top bar */
@@ -263,7 +278,7 @@ body {
     outline-color: var(--outline-color);
     outline-style: solid;
     outline-offset: -1px;
-    border-radius: 16px;
+    border-radius: 8px;
     position: relative;
     
     /* Adding the shadow */
@@ -291,18 +306,18 @@ body {
     transition: outline-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Card hover effect */
+/*
 .card:hover {
-    outline-color: var(--primary-color);
+    outline-color: var(--accent-color);
     cursor: pointer;
     box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
 }
-/* Card hover effect for active state */
 .card:active {
-    outline-color: var(--primary-color-active);
+    outline-color: var(--accent-color-active);
     background-color: var(--background-color-active);
     box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
 }
+*/
 
 /* Word styling */
 .card .word {
@@ -326,18 +341,15 @@ body {
 
 /* Different colors for different word types */
 .card .word .word-type-noun {
-    color: #19d1d1; /* Cyan */
+    color: #1976d2; /* Cyan */
 }
 .card .word .word-type-verb {
-    color: #d119d1; /* Magenta */
+    color: #76d219; /* Magenta */
 }
 .card .word .word-type-adjective {
-    color: #d1d119; /* Yellow */
+    color: #d21976; /* Yellow */
 }
-/* Like an adverb is ever gonna show up on WOTD lol, we're not even gonna bother with articles or conjunctions */
-.card .word .word-type-adverb {
-    color: #d11919; /* Red */
-}
+/* Note: Adverbs, prepositions, onemonatopoeias, etc. are BANNED from Word of the Day */
 
 /* IPA styling */
 .card .ipa {
@@ -407,9 +419,9 @@ body {
     background-color: var(--background-color);
     outline-width: 2px;
     outline-color: var(--outline-color);
-    outline-style: dashed;
+    /* outline-style: dashed; */
     outline-offset: -1px;
-    border-radius: 16px;
+    border-radius: 8px;
     position: relative;
     
     /* Adding the shadow */
@@ -454,12 +466,12 @@ body {
 }
 
 .load-more-button:hover {
-    border-color: var(--primary-color);
+    border-color: var(--accent-color);
     box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
 }
 
 .load-more-button:active {
-    border-color: var(--primary-color-active);
+    border-color: var(--accent-color-active);
     background-color: var(--background-color-active);
     box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
 }
@@ -480,7 +492,7 @@ body {
     outline-style: solid;
     outline-offset: -1px;
     box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.25);
-    border-radius: 16px;
+    border-radius: 8px;
     display: block;
     justify-content: space-between;
 }
@@ -519,7 +531,7 @@ body {
     box-sizing: border-box;
 }
 .card-subscribe .email-input:focus {
-    outline-color: var(--primary-color);
+    outline-color: var(--accent-color);
 }
 .card-subscribe .subscribe-button {
     height: 32px;
@@ -539,10 +551,10 @@ body {
     user-select: none;
 }
 .card-subscribe .subscribe-button:hover {
-    outline-color: var(--primary-color);
+    outline-color: var(--accent-color);
 }
 .card-subscribe .subscribe-button:active {
-    outline-color: var(--primary-color-active);
+    outline-color: var(--accent-color-active);
     background-color: var(--background-color-active);
 }
 .card-subscribe .logo-discord {
@@ -597,10 +609,10 @@ body {
     box-sizing: border-box;
 }
 .card-subscribe .button:hover {
-    outline-color: var(--primary-color);
+    outline-color: var(--accent-color);
 }
 .card-subscribe .button:active {
-    outline-color: var(--primary-color-active);
+    outline-color: var(--accent-color-active);
     background-color: var(--background-color-active);
 }
 .card-subscribe .button-container {
@@ -615,6 +627,11 @@ body {
     color: var(--text-color);
     margin: 0;
     text-align: center;
+}
+.card-subscribe a {
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
 }
 
 /* Bottom Text Styling */
@@ -717,6 +734,20 @@ body {
     font-size: 14px;
 }
 
+.footer-fixed {
+    height: 32px;
+    min-height: 32px;
+    background-color: var(--background-color);
+    color: var(--secondary-text-color);
+    padding: 0 16px;
+    text-align: center;
+    border-top: 2px solid var(--outline-color);
+    font-size: 14px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
 /* Flexbox layout */
 .footer-content {
     height: 100%;
@@ -746,15 +777,15 @@ body {
 .footer-right a {
     color: var(--footer-link-color);
     text-decoration: none;
-    transition: color 0.2s ease;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
 }
 
 .footer-right a:hover {
-    color: var(--primary-color);
+    color: var(--accent-color);
     text-decoration: underline;
 }
 .footer-right a:active {
-    color: var(--primary-color-active);
+    color: var(--accent-color-active);
 }
 
 .footer-right a:last-child {

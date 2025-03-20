@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>LAN Shell</title>
+        <link rel="icon" href="favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="styles.css">
+        <meta name="description" content="LAN Shell">
+        <meta name="author" content="Word of the Day">
+    </head>
+    <body>
+        <textarea id="log" readonly>{{ logs }}</textarea>
+        <form method="POST" action="/execute">
+            <input type="text" name="command" placeholder="Enter command..." autofocus autocomplete="off">
+            <button type="submit">Send</button>
+        </form>        
+        <script src="js/script.js"></script>
+    </body>
+</html>

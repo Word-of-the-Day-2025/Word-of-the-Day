@@ -1,6 +1,7 @@
 discord.py
 flask
-instagrapi
-pillow
+gunicorn
+pip install python-dateutil
 python-dotenv
 pytz
+waitress

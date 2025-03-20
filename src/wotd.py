@@ -26,6 +26,30 @@ type = ''
 definition = ''
 date = ''
 
+queued_word = ''
+queued_ipa = ''
+queued_type = ''
+queued_definition = ''
+queued_date = ''
+
+def query_queued():
+    global queued_word
+    global queued_ipa
+    global queued_type
+    global queued_definition
+    global queued_date
+
+    return queued_word, queued_ipa, queued_type, queued_definition, queued_date
+
+def query_wotd():
+    global word
+    global ipa
+    global type
+    global definition
+    global date
+
+    return word, ipa, type, definition, date
+
 async def queue_wotd():
     # Make the variables global
     global queued_word
@@ -54,7 +78,8 @@ async def queue_wotd():
 
         # Find out what the date will be next 8:00 AM PST
         utc_now = datetime.datetime.now(datetime.timezone.utc)
-        pacific = pytz.timezone('US/Pacific')
+        # pacific = pytz.timezone('US/Pacific')
+        pacific = pytz.timezone('America/Los_Angeles')
         pacific_now = utc_now.astimezone(pacific)
         if pacific_now.hour >= 8:
             next_8am = pacific_now.replace(hour=8, minute=0, second=0, microsecond=0) + datetime.timedelta(days=1)
@@ -67,15 +92,6 @@ async def queue_wotd():
         next_midnight = (now + datetime.timedelta(days=1)).replace(hour=0, minute=0, second=0, microsecond=0)
         sleep_duration = (next_midnight - now).total_seconds()
         await asyncio.sleep(sleep_duration)
-
-def query_queued():
-    global queued_word
-    global queued_ipa
-    global queued_type
-    global queued_definition
-    global queued_date
-
-    return queued_word, queued_ipa, queued_type, queued_definition, queued_date
 
 async def update_wotd():
     global word
@@ -98,6 +114,8 @@ async def update_wotd():
         # Update the word of the day
         word, ipa, type, definition, date = query_queued()
 
-def query_wotd():
-    '''Queries the word of the day.'''
-    return word, ipa, type, definition, date
+queue_wotd_thread = threading.Thread(target=lambda: asyncio.run(queue_wotd()))
+queue_wotd_thread.start()
+
+update_wotd_thread = threading.Thread(target=lambda: asyncio.run(update_wotd()))
+update_wotd_thread.start()

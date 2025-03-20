@@ -11,7 +11,8 @@ async function updateWOTDCard() {
         const wordElement = document.getElementById('word');
         wordElement.innerHTML = `${data.word} <span id="word-type" class="word-type word-type-${data.type.toLowerCase()}">${data.type}</span>`;
         const ipaElement = document.getElementById('ipa');
-        ipaElement.innerHTML = `${data.ipa} <span><img src="assets/svgs/pronunciation.svg" alt="Pronunciation" class="pronunciation"></span>`;
+        // ipaElement.innerHTML = `${data.ipa} <span><img src="assets/svgs/pronunciation.svg" alt="Pronunciation" class="pronunciation"></span>`;
+        ipaElement.innerHTML = `${data.ipa}`;
         document.getElementById('definition').textContent = data.definition
         document.getElementById('date').textContent = formattedDate    
     } catch (error) {
