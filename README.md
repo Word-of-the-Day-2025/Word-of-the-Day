@@ -19,17 +19,9 @@ By default, all extensions (in `./src/extensions`) are placed in the `.dormant` 
 
 ### Hosting
 
-#### Windows:
 ```bash
 git clone https://github.com/gaming-gaming/Word-of-the-Day.git
 cd Word-of-the-Day
 pip install -r requirements.txt
 python main.py
-```
-#### Linux:
-```bash
-git clone https://github.com/gaming-gaming/Word-of-the-Day.git
-cd Word-of-the-Day
-pip3 install -r requirements.txt
-python3 main.py
 ```
