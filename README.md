@@ -11,7 +11,6 @@ The code is completely free to use and open-source under the [Apache License 2.0
 
 ### Key Features
 - A website for displaying the Word of the Day (default port: `80`)
-- A LAN shell terminal webpage for remotely controlling the host computer (default port: `8000`)
 - A Discord bot that messages subscribing users and server channels daily
 
 ### Extensions
