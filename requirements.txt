@@ -1,7 +1,7 @@
 discord.py
 flask
 gunicorn
-pip install python-dateutil
+python-dateutil
 python-dotenv
 pytz
 waitress
