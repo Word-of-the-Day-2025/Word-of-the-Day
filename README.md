@@ -3,7 +3,7 @@
 </p>
 
 # Word of the Day
-[![Version](https://raw.githubusercontent.com/gaming-gaming/WOTD-Brand-Assets/main/badges/Version-1.0.0-%231976d2.svg)](https://github.com/gaming-gaming/Word-of-the-Day/releases/)
+[![Version](https://raw.githubusercontent.com/gaming-gaming/WOTD-Brand-Assets/main/badges/Version-1.1.1-%231976d2.svg)](https://github.com/gaming-gaming/Word-of-the-Day/releases/)
 [![License](https://raw.githubusercontent.com/gaming-gaming/WOTD-Brand-Assets/main/badges/License-Apache%202.0-gradient.svg)](LICENSE)
 
 **Word of the Day (WOTD)** is a service for providing a unique and interesting word every day via website and communication services.
