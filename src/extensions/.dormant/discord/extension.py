@@ -417,9 +417,7 @@ async def update_activity():
 
         # Calculate current time and PST timezone
         now = datetime.datetime.now(datetime.timezone.utc)
-        pst = datetime.timezone(datetime.timedelta(hours=-8))
-
-        # Determine the next 8:00 AM PST
+        pst = tz.gettz('America/Los_Angeles')
         current_pst = now.astimezone(pst)
         next_8am_pst = current_pst.replace(hour=8, minute=0, second=0, microsecond=0)
         if current_pst >= next_8am_pst:
