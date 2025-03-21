@@ -17,10 +17,17 @@ The code is completely free to use and open-source under the [Apache License 2.0
 By default, all extensions (in `./src/extensions`) are placed in the `.dormant` folder. If you would like to use any of the included extensions, simply take the folders outside of the `.dormant` folder. Extensions may include files for configuration.
 
 ### Hosting
-
+#### Linux:
 ```bash
 git clone https://github.com/gaming-gaming/Word-of-the-Day.git
 cd Word-of-the-Day
 pip install -r requirements.txt
-python main.py
+bash start.sh
+```
+#### Windows:
+```bash
+git clone https://github.com/gaming-gaming/Word-of-the-Day.git
+cd Word-of-the-Day
+pip install -r requirements.txt
+bash start.bat
 ```
