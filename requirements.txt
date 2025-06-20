@@ -1,7 +1,12 @@
+colorama
+cpuinfo
 discord.py
-flask
-gunicorn
-python-dateutil
 python-dotenv
+GPUtil
+psutil
 pytz
+python-dateutil
+flask
+flask-limiter
+requests
 waitress
