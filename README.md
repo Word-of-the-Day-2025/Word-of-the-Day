@@ -3,17 +3,17 @@
 </p>
 
 # Word of the Day
-[![Managed by Sesquipedalians](https://raw.githubusercontent.com/gaming-gaming/WOTD-Brand-Assets/main/badges/Managed_by-Sesquipedalians-%231976d2.svg)](https://wotd.site)
-[![Version](https://raw.githubusercontent.com/gaming-gaming/WOTD-Brand-Assets/main/badges/Version-1.2.0-%2376d219.svg)](https://github.com/gaming-gaming/Word-of-the-Day/releases/)
-[![Free API for Developers](https://raw.githubusercontent.com/gaming-gaming/WOTD-Brand-Assets/main/badges/Free_API_for_Developers-%23d21976.svg)](https://wotd.site/api)
-[![License](https://raw.githubusercontent.com/gaming-gaming/WOTD-Brand-Assets/main/badges/License-Apache%202.0-gradient.svg)](LICENSE)
+[![Managed by Sesquipedalians](https://raw.githubusercontent.com/Word-of-the-Day-2025/WOTD-Brand-Assets/main/badges/Managed_by-Sesquipedalians-%231976d2.svg)](https://wotd.site)
+[![Version](https://raw.githubusercontent.com/Word-of-the-Day-2025/WOTD-Brand-Assets/main/badges/Version-1.2.0-%2376d219.svg)](https://github.com/gaming-gaming/Word-of-the-Day/releases/)
+[![Free API for Developers](https://raw.githubusercontent.com/Word-of-the-Day-2025/WOTD-Brand-Assets/main/badges/Free_API_for_Developers-%23d21976.svg)](https://wotd.site/api)
+[![License](https://raw.githubusercontent.com/Word-of-the-Day-2025/WOTD-Brand-Assets/main/badges/License-Apache%202.0-gradient.svg)](LICENSE)
 
-[![Integration for Discord](https://raw.githubusercontent.com/gaming-gaming/WOTD-Brand-Assets/main/badges/Integration_for-Discord-%235865f2.svg)](https://discord.com/oauth2/authorize?client_id=1322109562119000149&permissions=0&integration_type=0&scope=bot)
-[![Made With Python](https://raw.githubusercontent.com/gaming-gaming/WOTD-Brand-Assets/main/badges/Made_With-Python-%233572a5.svg)](https://www.python.org/)
-[![Made With HTML5](https://raw.githubusercontent.com/gaming-gaming/WOTD-Brand-Assets/main/badges/Made_With-HTML5-%23e34c26.svg)](https://html.spec.whatwg.org/)
-[![Made With CSS](https://raw.githubusercontent.com/gaming-gaming/WOTD-Brand-Assets/main/badges/Made_With-CSS-%23663399.svg)](https://www.w3.org/Style/CSS/)
-[![Made With JavaScript](https://raw.githubusercontent.com/gaming-gaming/WOTD-Brand-Assets/main/badges/Made_With-JavaScript-%23f1e05a.svg)](https://tc39.es/)
-[![Powered by SQLite](https://raw.githubusercontent.com/gaming-gaming/WOTD-Brand-Assets/main/badges/Powered_by-SQLite-%23003b57.svg)](https://sqlite.org/)
+[![Integration for Discord](https://raw.githubusercontent.com/Word-of-the-Day-2025/WOTD-Brand-Assets/main/badges/Integration_for-Discord-%235865f2.svg)](https://discord.com/oauth2/authorize?client_id=1322109562119000149&permissions=0&integration_type=0&scope=bot)
+[![Made With Python](https://raw.githubusercontent.com/Word-of-the-Day-2025/WOTD-Brand-Assets/main/badges/Made_With-Python-%233572a5.svg)](https://www.python.org/)
+[![Made With HTML5](https://raw.githubusercontent.com/Word-of-the-Day-2025/WOTD-Brand-Assets/main/badges/Made_With-HTML5-%23e34c26.svg)](https://html.spec.whatwg.org/)
+[![Made With CSS](https://raw.githubusercontent.com/Word-of-the-Day-2025/WOTD-Brand-Assets/main/badges/Made_With-CSS-%23663399.svg)](https://www.w3.org/Style/CSS/)
+[![Made With JavaScript](https://raw.githubusercontent.com/Word-of-the-Day-2025/WOTD-Brand-Assets/main/badges/Made_With-JavaScript-%23f1e05a.svg)](https://tc39.es/)
+[![Powered by SQLite](https://raw.githubusercontent.com/Word-of-the-Day-2025/WOTD-Brand-Assets/main/badges/Powered_by-SQLite-%23003b57.svg)](https://sqlite.org/)
 
 ### Overview
 **Word of the Day (WOTD)** is a service for providing a unique and interesting word every day via website and communication services.
@@ -48,8 +48,8 @@ The **Discord Bot** extension is in the folder `./src/extensions/discord-bot`. I
 The Discord bot includes a variety of commands for both WOTD users and administrators. User commands use slashes, while admin commands use the "! " suffix.
 
 Users may use basic query and config commands:
-![Demonstration 0](https://raw.githubusercontent.com/gaming-gaming/WOTD-Brand-Assets/refs/heads/main/misc/Demo0.gif)
-![Demonstration 1](https://raw.githubusercontent.com/gaming-gaming/WOTD-Brand-Assets/refs/heads/main/misc/Demo1.gif)
+![Demonstration 0](https://raw.githubusercontent.com/Word-of-the-Day-2025/WOTD-Brand-Assets/refs/heads/main/misc/Demo0.gif)
+![Demonstration 1](https://raw.githubusercontent.com/Word-of-the-Day-2025/WOTD-Brand-Assets/refs/heads/main/misc/Demo1.gif)
 
 Admins have access to advanced commands unavailable to regular users:
 - **append {word} {ipa} {pos} {definition} {date}**: Appends a new word to the `words.db` database. The {date} argument is optional and defaults to the day after the last date set in the table.
