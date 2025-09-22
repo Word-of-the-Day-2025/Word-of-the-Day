@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /404
+Disallow: /config_discord
+Sitemap: https://wotd.site/sitemap.xml

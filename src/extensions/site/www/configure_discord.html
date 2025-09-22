@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    />
+    <title>Word of the Day | Configure Discord Bot</title>
+    <link rel="icon" href="favicon.ico" />
+    <link rel="stylesheet" href="{{ styles }}" />
+
+    <!-- SEO Meta Tags -->
+    <meta
+        name="description"
+        content="Word of the Day is a free and open-source service that posts interesting and uncommon words daily."
+    />
+    <meta
+        name="keywords"
+        content="vocabulary, language, dictionary, word of the day, wotd, English"
+    />
+    <meta name="author" content="Word of the Day Contributors" />
+</head>
+<body>
+    <header class="site-header">
+        <div class="container-mobile" style="display: none;">  <!-- Hide by default -->
+            <button id="mobile-menu-toggle" aria-label="Toggle mobile menu" title="Toggle Mobile Menu" class="mobile-menu-toggle" onclick="openNav()"></span>
+                <img src="assets/svg/hamburger.svg" alt="Toggle Mobile Menu" />
+            </button>
+
+            <a href="/">
+                <svg class="logo" alt="WOTD" version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 458 97" width="458" height="97" aria-label="Word of the Day" title="Word of the Day">
+                    <style>
+                        .s0 { fill: currentColor; }
+                    </style>
+                    <path id="Text" fill-rule="evenodd" class="s0" d="m136.9 9.3l-26.6 85.7h-16.1l-21.1-67.9-21.2 67.9h-16.1l-26.6-85.8h-9.1v-7.5h44.3v7.5h-10l17.8 57.4 20.1-64.9h17.8l20.5 65.9 18.1-58.4h-11.1v-7.5h28.9v7.5zm63.8 87.6q-23.6 0-37-12.9-13.4-12.8-13.4-35.5 0-22.6 13.4-35.5 13.5-12.9 37-12.9 23.5 0 36.9 12.9 13.4 12.8 13.4 35.5 0 22.7-13.5 35.5-13.3 12.9-36.8 12.9zm0-7.6q11.9 0.1 17.7-10 5.8-10.1 5.8-30.8 0-20.7-5.8-30.8-5.8-10-17.8-10-11.8 0-17.7 10.2-5.8 10.1-5.8 30.6 0 20.5 5.8 30.7 5.9 10.2 17.8 10.2zm128 5.7h-49v-7.6h12.3v-77.2l-25.5 0.1v14.7h-8.6v-23.3h92.5v23.3h-8.4v-14.7h-25.8v77.1h12.5zm76.9 0h-47.9v-7.5h11.9v-78.2h-11.9v-7.6h47.9q25.1 0 38.4 12 13.3 12 13.3 34.6 0 22.7-13.3 34.7-13.4 12-38.4 12zm-11.9-85.7v78.2h8.7q14.6 0 21.4-9.4 6.8-9.4 6.8-29.8 0-20.3-6.8-29.6-6.7-9.4-21.4-9.4z"/>
+                </svg>
+            </a>
+
+            <button aria-label="Toggle theme" title="Toggle Theme" class="theme-toggle" onclick="toggleTheme()">
+                <img src="assets/svg/theme.svg" alt="Toggle Theme" />
+            </button>
+        </div>
+        <div class="container">
+            <a href="/">
+                <svg class="logo" alt="WOTD" version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 458 97" width="458" height="97" aria-label="Word of the Day" title="Word of the Day">
+                    <style>
+                        .s0 { fill: currentColor; }
+                    </style>
+                    <path id="Text" fill-rule="evenodd" class="s0" d="m136.9 9.3l-26.6 85.7h-16.1l-21.1-67.9-21.2 67.9h-16.1l-26.6-85.8h-9.1v-7.5h44.3v7.5h-10l17.8 57.4 20.1-64.9h17.8l20.5 65.9 18.1-58.4h-11.1v-7.5h28.9v7.5zm63.8 87.6q-23.6 0-37-12.9-13.4-12.8-13.4-35.5 0-22.6 13.4-35.5 13.5-12.9 37-12.9 23.5 0 36.9 12.9 13.4 12.8 13.4 35.5 0 22.7-13.5 35.5-13.3 12.9-36.8 12.9zm0-7.6q11.9 0.1 17.7-10 5.8-10.1 5.8-30.8 0-20.7-5.8-30.8-5.8-10-17.8-10-11.8 0-17.7 10.2-5.8 10.1-5.8 30.6 0 20.5 5.8 30.7 5.9 10.2 17.8 10.2zm128 5.7h-49v-7.6h12.3v-77.2l-25.5 0.1v14.7h-8.6v-23.3h92.5v23.3h-8.4v-14.7h-25.8v77.1h12.5zm76.9 0h-47.9v-7.5h11.9v-78.2h-11.9v-7.6h47.9q25.1 0 38.4 12 13.3 12 13.3 34.6 0 22.7-13.3 34.7-13.4 12-38.4 12zm-11.9-85.7v78.2h8.7q14.6 0 21.4-9.4 6.8-9.4 6.8-29.8 0-20.3-6.8-29.6-6.7-9.4-21.4-9.4z"/>
+                </svg>
+            </a>
+
+            <div class="divider-vertical"></div>
+
+            <nav class="primary-nav">
+                <ul>
+                    <li><a href="/subscribe">Subscribe</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-extras">
+                <div class="social-icons">
+                    <a href="https://x.com/WordOfTheDay_X" aria-label="Twitter" title="Twitter Account">
+                        <img src="assets/svg/twitter.svg" alt="Twitter Account" />
+                    </a>
+                    <a href="https://www.instagram.com/wordoftheday_insta/" aria-label="Instagram" title="Instagram Account">
+                        <img src="assets/svg/instagram.svg" alt="Instagram Account" />
+                    </a>
+                    <a href="https://github.com/gaming-gaming/Word-of-the-Day" aria-label="GitHub" title="GitHub Repository">
+                        <img src="assets/svg/github.svg" alt="GitHub Repository" />
+                    </a>
+                <div class="divider-vertical"></div>
+                <button aria-label="Toggle theme" title="Toggle Theme" class="theme-toggle" onclick="toggleTheme()">
+                    <img src="assets/svg/theme.svg" alt="Toggle Theme" />
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div id="overlay" class="overlay" style="display: none;" id="overlay" onclick="closeNav()"></div>
+
+    <!-- Shoutout W3 Schools for the mobile menu code <3 -->
+    <nav id="mobile-menu" class="mobile-menu" style="display: none;">
+        <a href="javascript:void(0)" class="close-button" onclick="closeNav()">
+            <img src="assets/svg/close.svg" alt="Close Menu" />
+        </a>
+        <nav class="mobile-nav">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/subscribe">Subscribe</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/api">API</a></li>
+                <li><a href="mailto:2025wordoftheday@gmail.com">Contact</a></li>
+                <li><a href="/databases">Databases</a></li>
+            </ul>
+        </nav>
+        <div class="divider-horizontal"></div>
+        <div class="mobile-social-icons">
+            <a href="https://x.com/WordOfTheDay_X" aria-label="Twitter" title="Twitter Account">
+                <img src="assets/svg/twitter_secondary.svg" alt="Twitter Account" />
+            </a>
+            <a href="https://www.instagram.com/wordoftheday_insta/" aria-label="Instagram" title="Instagram Account">
+                <img src="assets/svg/instagram_secondary.svg" alt="Instagram Account" />
+            </a>
+            <a href="https://github.com/gaming-gaming/Word-of-the-Day" aria-label="GitHub" title="GitHub Repository">
+                <img src="assets/svg/github_secondary.svg" alt="GitHub Repository" />
+            </a>
+        </div>
+    </nav>
+
+    <main class="site-main container mobile-padding" aria-label="Configure Discord Bot">
+        <h1 class="heading">Configure Discord Bot Settings</h1>
+
+        <div class="configure-discord-card card">
+            <img src="/cache/config_discord/{{ image_filename }}.png" alt="Discord Icon" class="discord-icon" />
+            <p class="discord-name">{{ discord_name }}</p>
+            {{ channel_info }}
+        </div>
+
+        <form id="settings-form" action="/configure_discord" method="POST">
+            <!-- Hidden inputs to store user_id, guild_id, channel_id, and token -->
+            <input type="hidden" name="user_id" id="user_id" value="{{ user_id }}">
+            <input type="hidden" name="guild_id" id="guild_id" value="{{ guild_id }}">
+            <input type="hidden" name="channel_id" id="channel_id" value="{{ channel_id }}">
+            <input type="hidden" name="token" id="token" value="{{ token }}">
+
+            <h2 class="subheading">Time Settings:</h2>
+            <!--
+            <p class="description" style="margin-top: 1rem;">Select the time zone you wish to use (some timezones may be affected by Daylight Savings Time):</p>
+            {{ timezone_options }}
+            <br />
+            -->
+
+            <!-- May God forgive me for this awful CSS -->
+            <p class="description" style="margin-top: 0.5rem;">Select the time you wish to receive the Word of the Day:</p>
+            <!--
+            <div class="label-group">
+                <label class="checkbox-label" style="margin-top: -0.5rem;">
+                    <input type="checkbox" name="individual_times" value="true" onchange="toggleDayTimes(this)">
+                    Set individual times for each day of the week
+                </label>
+            </div>
+            -->
+            <div id="single-time" class="single-time" style="margin-top: 0.5rem;">
+                <select name="single_time" id="single_time" class="selection" onchange="updateAllTimes(this.value)">
+                    {{ time_options }}
+                </select>
+            </div>
+            <div id="all-days" class="all-days" style="display: none;">
+                <div class="day-time">
+                    <label>Sun:</label>
+                    <select name="sunday_time" id="sunday_time" class="selection">
+                        {{ time_options }}
+                    </select>
+                </div>
+                <div class="day-time">
+                    <label>Mon:</label>
+                    <select name="monday_time" id="monday_time" class="selection">
+                        {{ time_options }}
+                    </select>
+                </div>
+                <div class="day-time">
+                    <label>Tue:</label>
+                    <select name="tuesday_time" id="tuesday_time" class="selection">
+                        {{ time_options }}
+                    </select>
+                </div>
+                <div class="day-time">
+                    <label>Wed:</label>
+                    <select name="wednesday_time" id="wednesday_time" class="selection">
+                        {{ time_options }}
+                    </select>
+                </div>
+                <div class="day-time">
+                    <label>Thu:</label>
+                    <select name="thursday_time" id="thursday_time" class="selection">
+                        {{ time_options }}
+                    </select>
+                </div>
+                <div class="day-time">
+                    <label>Fri:</label>
+                    <select name="friday_time" id="friday_time" class="selection">
+                        {{ time_options }}
+                    </select>
+                </div>
+                <div class="day-time">
+                    <label>Sat:</label>
+                    <select name="saturday_time" id="saturday_time" class="selection">
+                        {{ time_options }}
+                    </select>
+                </div>
+            </div>
+            <br />
+
+            <!--
+            <p class="description" style="margin-top: -0.5rem;">Select whether you want to always receive the Word of the Day for UTC, regardless of your selected timezone:</p>
+            <div class="label-group" style="margin-top: 0.5rem;">
+                <label class="checkbox-label">
+                    <input type="checkbox" name="wotd_for_utc" value="true">
+                    Send the Word of the Day for UTC
+                </label>
+            </div>
+            <p class="subtext" style="margin-top: 0.5rem;">If you are in a timezone that is earlier than UTC, you may receive the WOTD for the following day if you have this option enabled.</p>
+            -->
+
+            <!-- <h2 class="subheading" style="margin-top: 2rem;">Message Format:</h2> -->
+            <h2 class="subheading" style="margin-top: -1rem;">Message Format:</h2>
+            <div class="label-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" name="include_date" value="true" checked>
+                    Include the date in the message ("Today is ______, and...")
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="include_ipa" value="true" checked>
+                    Include the IPA pronunciation of the Word of the Day
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="display_dmy" value="true" checked>
+                    Display dates in Day-Month-Year format instead of Month-Day-Year format
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="send_updates" value="true" checked>
+                    Send updates about WOTD (new features, update announcements, etc.)
+                </label>
+            </div>
+
+            <h2 class="subheading" style="margin-top: 2rem;">Message Date Style:</h2>
+            <div class="radio-group" style="margin-bottom: 0.5rem;">
+                <label class="radio-label">
+                    <input type="radio" name="message_date_style" value="long">
+                    Long (e.g., "Wednesday, January 1st, 2025" or "Wednesday, 1 January 2025")
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="message_date_style" value="medium" checked>
+                    Medium (e.g., "January 1st, 2025" or "1 January 2025")
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="message_date_style" value="short">
+                    Short, hyphenated (e.g., "01-01-2025")
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="message_date_style" value="short_slash">
+                    Short, slashed (e.g., "01/01/2025")
+                </label>
+            </div>
+
+            <span class="subtext" style="margin-top: 0.5rem;">Message date styles are affected by the "Day-Month-Year" setting above.</span>
+
+            <div class="buttons-container" style="text-align: center;">
+                <button type="button" class="button" style="width: 12rem;" onclick="saveSettings()">Save Settings</button>
+                <button type="reset" class="button" style="width: 12rem;" onclick="resetSettings()">Reset Settings</button>
+                <button type="button" class="button button-forget" style="width: 12rem;" onclick="forgetMe()">Forget Me</button>
+            </div>
+        </form>
+    </main>
+
+    <div style="flex-grow: 1;"></div>
+
+    <footer class="site-footer">
+        <div class="container-mobile" style="display: none;">  <!-- Hide by default -->
+            <p>&copy; 2025 WOTD, All rights reserved.</p>
+        </div>
+        <div class="container">
+            <p>&copy; 2025 WOTD</p>
+            <nav class="footer-nav">
+                <ul>
+                    <li><a href="/api">API</a></li>
+                    <li><a href="mailto:2025wordoftheday@gmail.com">Contact</a></li>
+                    <li><a href="/databases">Databases</a></li>
+                </ul>
+            </nav>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script defer src="js/mobile-menu.js"></script>
+    <script defer src="js/toggle-theme.js"></script>
+    <script defer src="js/configure-discord.js"></script>
+</body>
+</html>

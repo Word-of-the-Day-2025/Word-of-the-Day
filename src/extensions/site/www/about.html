@@ -6,20 +6,31 @@
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     />
-    <title>Word of the Day</title>
+    <title>Word of the Day | About</title>
     <link rel="icon" href="favicon.ico" />
     <link rel="stylesheet" href="{{ styles }}" />
 
+    <!-- SEO Meta Tags -->
     <meta
         name="description"
-        content="The Word of the Day, every day at 4:00 PM UTC."
+        content="Word of the Day is a free and open-source service that posts interesting and uncommon words daily."
     />
-    <!-- SEO Meta Tags (Also for unblocking on school networks) -->
     <meta
         name="keywords"
-        content="vocabulary, language, dictionary, word of the day, sesquipedalian, English"
+        content="vocabulary, language, dictionary, word of the day, wotd, English"
     />
     <meta name="author" content="Word of the Day Contributors" />
+    <!-- Open Graph / Discord / Facebook -->
+    <meta property="og:title" content="WOTD · Word of the Day, Every Day.">
+    <meta property="og:description" content="Word of the Day is a free and open-source service that posts interesting and uncommon words daily.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://wotd.site/">
+    <meta property="og:image" content="/assets/img/preview.png">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="WOTD · Word of the Day, Every Day.">
+    <meta name="twitter:description" content="Word of the Day is a free and open-source service that posts interesting and uncommon words daily.">
+    <meta name="twitter:image" content="/assets/img/preview.png">
 </head>
 <body>
     <header class="site-header">
@@ -62,6 +73,9 @@
 
             <div class="header-extras">
                 <div class="social-icons">
+                    <a href="https://x.com/WordOfTheDay_X" aria-label="Twitter" title="Twitter Account">
+                        <img src="assets/svg/twitter.svg" alt="Twitter Account" />
+                    </a>
                     <a href="https://www.instagram.com/wordoftheday_insta/" aria-label="Instagram" title="Instagram Account">
                         <img src="assets/svg/instagram.svg" alt="Instagram Account" />
                     </a>
@@ -89,11 +103,15 @@
                 <li><a href="/subscribe">Subscribe</a></li>
                 <li><a href="/about">About</a></li>
                 <li><a href="/api">API</a></li>
-                <li><a href="/contact">Contact</a></li>
+                <li><a href="mailto:2025wordoftheday@gmail.com">Contact</a></li>
+                <li><a href="/databases">Databases</a></li>
             </ul>
         </nav>
         <div class="divider-horizontal"></div>
         <div class="mobile-social-icons">
+            <a href="https://x.com/WordOfTheDay_X" aria-label="Twitter" title="Twitter Account">
+                <img src="assets/svg/twitter_secondary.svg" alt="Twitter Account" />
+            </a>
             <a href="https://www.instagram.com/wordoftheday_insta/" aria-label="Instagram" title="Instagram Account">
                 <img src="assets/svg/instagram_secondary.svg" alt="Instagram Account" />
             </a>
@@ -103,12 +121,12 @@
         </div>
     </nav>
 
-    <main class="site-main container" aria-label="About Word of the Day">
+    <main class="site-main container mobile-padding" aria-label="About Word of the Day">
         <div class="about-wotd">
             <h1 id="about-wotd" class="heading">About Word of the Day</h1>
             <h2 class="subheading">What is Word of the Day about?</h2>
             <p class="copy">
-                Word of the Day is a free and open-source service that posts an interesting and uncommon word every day at 12:00 AM UTC.
+                Word of the Day is a free and open-source service that posts an interesting and uncommon word every day at midnight UTC.
                 The word is accompanied by its pronunciation, definition, and part of speech, provided by <a href="https://www.wiktionary.org/">Wiktionary</a>.
                 You can subscribe to Word of the Day via Discord, or use the <a href="/api">free API</a>.
             </p>
@@ -129,9 +147,13 @@
             </p>
             <h2 class="subheading">Fonts Used</h2>
             <p class="copy">
-                Text on this site uses <a href="https://dejavu-fonts.github.io/">DejaVu Sans</a>, a free and open-source typeface.
+                Text on this site uses <a href="https://github.com/rsms/inter">Inter</a>, a free and open-source typeface.
                 Monospace text (Such as code blocks shown on the API documentation page) uses <a href="https://www.jetbrains.com/lp/mono/">JetBrains Mono</a>, a free and open-source typeface designed for programming.
-                The WOTD logo is DejaVu Serif Bold.
+                The WOTD logo is <a href="https://dejavu-fonts.github.io/">DejaVu Serif Bold</a>.
+            </p>
+            <h2 class="subheading">Artwork Used</h2>
+            <p class="copy">
+                Abstract background art used for the site preview embed and social media banners are from <a href="https://www.vecteezy.com/free-png/abstract-technology">Vecteezy</a>.
             </p>
         </div>
 
@@ -158,7 +180,8 @@
             <nav class="footer-nav">
                 <ul>
                     <li><a href="/api">API</a></li>
-                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="mailto:2025wordoftheday@gmail.com">Contact</a></li>
+                    <li><a href="/databases">Databases</a></li>
                 </ul>
             </nav>
         </div>
@@ -168,5 +191,4 @@
     <script defer src="js/mobile-menu.js"></script>
     <script defer src="js/toggle-theme.js"></script>
 </body>
-
 </html>

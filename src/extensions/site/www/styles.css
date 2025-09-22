@@ -141,14 +141,32 @@ body, .card, .site-header, .site-footer, .load-more-button {
 }
 
 @font-face {
-    font-family: 'DejaVu Sans';
-    src: url('assets/ttf/DejaVuSans.ttf') format('truetype');
+    font-family: 'Inter Regular';
+    src: url('assets/ttf/Inter-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
-    font-family: 'DejaVu Sans';
-    src: url('assets/ttf/DejaVuSans-Bold.ttf') format('truetype');
+    font-family: 'Inter Medium';
+    src: url('assets/ttf/Inter-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Inter Bold';
+    src: url('assets/ttf/Inter-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Inter Display Medium';
+    src: url('assets/ttf/InterDisplay-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Inter Display Bold';
+    src: url('assets/ttf/InterDisplay-Bold.ttf') format('truetype');
     font-weight: bold;
     font-style: normal;
 }
@@ -186,7 +204,7 @@ body, .card, .site-header, .site-footer, .load-more-button {
 
 /* Body styles */
 body {
-    font-family: 'DejaVu Sans', sans-serif;
+    font-family: 'Inter Regular', sans-serif;
     background-color: var(--background-color);
     color: var(--text-color);
     line-height: 1.6;
@@ -194,10 +212,6 @@ body {
     flex-direction: column;
     min-height: 100vh;
     margin: 0;
-}
-
-[data-theme="hotdogstand"] body {
-    font-family: 'Comic Sans MS', sans-serif;
 }
 
 .container {
@@ -222,19 +236,27 @@ a:active {
     transition: color 0.1s ease-out;
 }
 
+input[type="checkbox"], input[type="radio"] {
+    accent-color: var(--accent-color);
+    cursor: pointer;
+    margin-right: 0.5rem;
+}
+
 .heading {
-    font-family: inherit;
+    font-family: 'Inter Display Bold', sans-serif;
     font-weight: bold;
     font-size: 3rem;
     display: flex;
     justify-content: center;
+    margin-bottom: 2rem;
 }
 
 .subheading {
-    font-family: inherit;
+    font-family: 'Inter Display Medium', sans-serif;
     font-weight: bold;
     font-size: 1.5rem;
     text-align: left;
+    margin-top: 1rem;
 }
 
 .copy {
@@ -267,7 +289,6 @@ code {
 }
 
 .inline-code [data-theme="hotdogstand"] {
-    font-family: 'Comic Sans MS', sans-serif;
     background-color: #ff0000;
     color: #ffff00;
     outline-color: #b00000;
@@ -287,7 +308,6 @@ code {
 }
 
 .code-block [data-theme="hotdogstand"] {
-    font-family: 'Comic Sans MS', sans-serif;
     background-color: #ff0000;
     color: #ffff00;
     outline-color: #b00000;
@@ -457,7 +477,7 @@ code {
 .primary-nav ul li a {
     color: var(--text-color);
     text-decoration: none;
-    font-weight: bold;
+    font-family: 'Inter Bold', sans-serif;
     transition: color 0.1s ease-in-out;
 }
 
@@ -523,10 +543,11 @@ code {
     outline-style: solid;
     outline-offset: -1px;
     outline-width: 2px;
-    margin: 2rem auto;
+    margin: 1rem auto;
 }
 
-.wotd-card h1 {
+.card h1 {
+    font-family: 'Inter Display Bold', sans-serif;
     font-size: 3rem;
     display: inline-flex;
     align-items: center;
@@ -540,6 +561,7 @@ code {
 
 .pos {
     font-size: 1.5rem;
+    font-family: 'Inter Medium', sans-serif;
     color: var(--secondary-text-color); /* Fallback color */
     margin-left: 0.5rem;
     display: inline-flex;
@@ -559,6 +581,7 @@ code {
 }
 
 .ipa {
+    font-family: 'Inter Medium', sans-serif;
     font-size: 1.5rem;
     color: var(--secondary-text-color);
 }
@@ -618,6 +641,7 @@ code {
 }
 
 .card h3 {
+    font-family: 'Inter Display Medium', sans-serif;
     font-size: 1.5rem;
     margin-bottom: 1rem;
 }
@@ -737,19 +761,11 @@ code {
     border-radius: 16px;
 }
 
-.about-wotd .subheading {
-    margin: 2rem 0 0 0;
-}
-
 .about-wotd p {
-    font-size: 1rem;
-    color: var(--text-color);
     margin: 0.5rem 0;
 }
 
 .attribution p {
-    font-size: 1rem;
-    color: var(--text-color);
     margin: 0.5rem 0;
 }
 
@@ -760,6 +776,7 @@ code {
 .quote-container {
     display: flex;
     align-items: center;
+    margin-bottom: 2rem;
 }
 
 .profile-pic {
@@ -778,13 +795,13 @@ code {
 }
 
 .quote-author {
-    font-weight: bold;
+    font-family: 'Inter Bold', sans-serif;
     font-size: 1rem;
     margin: 0;
 }
 
 .quote-role {
-    font-weight: normal;
+    font-family: 'Inter Medium', sans-serif;
     font-size: 1rem;
     color: var(--secondary-text-color);
     margin-left: 1rem;
@@ -824,6 +841,24 @@ code {
 }
 
 .api-docs ul li::marker {
+    color: var(--secondary-text-color);
+}
+
+.backup-card {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.backup-title {
+    font-family: 'Inter Medium', sans-serif;
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.backup-size {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
     color: var(--secondary-text-color);
 }
 
@@ -935,6 +970,176 @@ code {
     background-color: var(--background-color-active);
     outline-color: var(--accent-color-active);
     transition: background-color 0.1s ease-out, outline-color 0.1s ease-out;
+}
+
+.selection {
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+    width: 32rem;
+    height: 2rem;
+    padding-left: 0.5rem;
+    outline: 2px solid var(--outline-color);
+    outline-offset: -1px;
+    border: none;
+    border-radius: 16px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    box-shadow: inset 0 0px 8px rgba(0, 0, 0, 0.25);
+    font-size: 1rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: outline-color 0.1s ease-in-out, background-color 0.1s ease-in-out;
+}
+
+.selection:hover {
+    outline-color: var(--accent-color);
+    transition: outline-color 0.1s ease-in-out;
+}
+
+.selection:active {
+    outline-color: var(--accent-color-active);
+    transition: outline-color 0.1s ease-out, background-color 0.1s ease-out;
+}
+
+.label-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.checkbox-label {
+    width: 100%;
+    cursor: pointer;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 2px solid var(--outline-color);
+    box-shadow: 0 0px 8px rgba(0, 0, 0, 0.25);
+}
+
+.checkbox-label:hover {
+    border-color: var(--accent-color);
+    background-color: var(--background-color);
+    transition: border-color 0.1s ease-in-out, background-color 0.1s ease-in-out;
+}
+
+.checkbox-label:active {
+    border-color: var(--accent-color-active);
+    background-color: var(--background-color-active);
+    transition: border-color 0.1s ease-out background-color 0.1s ease-out;
+}
+
+.configure-discord-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 1rem;
+    gap: 1rem;
+    margin-top: -1rem;
+    width: min-content;
+}
+
+.discord-icon {
+    width: 3rem;
+    height: 3rem;
+    box-shadow: 0 0px 8px rgba(0, 0, 0, 0.25);
+    outline: var(--outline-color) solid 2px;
+    outline-offset: -1px;
+    border-radius: 50%;
+}
+
+.discord-name {
+    font-family: 'Inter Medium', sans-serif;
+    width: max-content;
+    color: var(--text-color);
+}
+
+.channel-name {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--secondary-text-color);
+    width: max-content;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.radio-label {
+    cursor: pointer;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 2px solid var(--outline-color);
+    box-shadow: 0 0px 8px rgba(0, 0, 0, 0.25);
+}
+
+.radio-label:hover {
+    border-color: var(--accent-color);
+    background-color: var(--background-color);
+    transition: border-color 0.1s ease-in-out, background-color 0.1s ease-in-out;
+}
+
+.radio-label:active {
+    border-color: var(--accent-color-active);
+    background-color: var(--background-color-active);
+    transition: border-color 0.1s ease-out background-color 0.1s ease-out;
+}
+
+.all-days {
+    margin-top: 1rem;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.day-time {
+    margin: -1rem inherit !important;
+}
+
+.day-time label {
+    font-family: 'JetBrains Mono', monospace;  /* Keep day of weeks the same length */
+}
+
+.day-time select {
+    margin: 0;
+}
+
+.buttons-container {
+    justify-content: center;
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.button-forget {
+    transition: background-color 0.1s ease-in-out, outline-color 0.1s ease-in-out;
+}
+
+.button-forget:hover {
+    outline-color: var(--text-red);
+    transition: background-color 0.1s ease-in-out, outline-color 0.1s ease-in-out;
+}
+
+.button-forget:active {
+    outline-color: var(--text-red);
+    transition: background-color 0.1s ease-out, outline-color 0.1s ease-out;
+}
+
+.info-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-top: 0.25rem;
+    margin-left: -0.5rem;
+    box-shadow: 0 0px 8px rgba(0, 0, 0, 0.25);
+    border-radius: 50%;
+    cursor: pointer;
 }
 
 /* Footer styles */

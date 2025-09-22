@@ -6,31 +6,9 @@
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     />
-    <title>Word of the Day</title>
+    <title>Word of the Day | 403 Forbidden</title>
     <link rel="icon" href="favicon.ico" />
     <link rel="stylesheet" href="{{ styles }}" />
-
-    <!-- SEO Meta Tags -->
-    <meta
-        name="description"
-        content="Word of the Day is a free and open-source service that posts interesting and uncommon words daily."
-    />
-    <meta
-        name="keywords"
-        content="vocabulary, language, dictionary, word of the day, wotd, English"
-    />
-    <meta name="author" content="Word of the Day Contributors" />
-    <!-- Open Graph / Discord / Facebook -->
-    <meta property="og:title" content="WOTD · Word of the Day, Every Day.">
-    <meta property="og:description" content="Word of the Day is a free and open-source service that posts interesting and uncommon words daily.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://wotd.site/">
-    <meta property="og:image" content="/assets/img/preview.png">
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="WOTD · Word of the Day, Every Day.">
-    <meta name="twitter:description" content="Word of the Day is a free and open-source service that posts interesting and uncommon words daily.">
-    <meta name="twitter:image" content="/assets/img/preview.png">
 </head>
 <body>
     <header class="site-header">
@@ -121,7 +99,10 @@
         </div>
     </nav>
 
-    {{ inject }}
+    <main class="site-main container" aria-label="">
+        <h1 class="heading">403 - Forbidden</h1>
+        <img src="assets/img/forbidden.png" alt="Huh?" style="height: 16rem; justify-content: center; display: block; margin-left: auto; margin-right: auto; margin-top: 2rem;" />
+    </main>
 
     <div style="flex-grow: 1;"></div>
 
@@ -142,7 +123,6 @@
     </footer>
 
     <!-- Scripts -->
-    <script defer src="js/load-more.js"></script>
     <script defer src="js/mobile-menu.js"></script>
     <script defer src="js/toggle-theme.js"></script>
 </body>

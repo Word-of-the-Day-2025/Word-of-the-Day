@@ -10,16 +10,27 @@
     <link rel="icon" href="favicon.ico" />
     <link rel="stylesheet" href="{{ styles }}" />
 
+    <!-- SEO Meta Tags -->
     <meta
         name="description"
-        content="The Word of the Day, every day at 4:00 PM UTC."
+        content="Word of the Day is a free and open-source service that posts interesting and uncommon words daily."
     />
-    <!-- SEO Meta Tags (Also for unblocking on school networks) -->
     <meta
         name="keywords"
-        content="vocabulary, language, dictionary, word of the day, sesquipedalian, English"
+        content="vocabulary, language, dictionary, word of the day, wotd, English"
     />
     <meta name="author" content="Word of the Day Contributors" />
+    <!-- Open Graph / Discord / Facebook -->
+    <meta property="og:title" content="WOTD · Word of the Day, Every Day.">
+    <meta property="og:description" content="Word of the Day is a free and open-source service that posts interesting and uncommon words daily.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://wotd.site/">
+    <meta property="og:image" content="/assets/img/preview.png">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="WOTD · Word of the Day, Every Day.">
+    <meta name="twitter:description" content="Word of the Day is a free and open-source service that posts interesting and uncommon words daily.">
+    <meta name="twitter:image" content="/assets/img/preview.png">
 </head>
 <body>
     <header class="site-header">
@@ -62,10 +73,13 @@
 
             <div class="header-extras">
                 <div class="social-icons">
+                    <a href="https://x.com/WordOfTheDay_X" aria-label="Twitter" title="Twitter Account">
+                        <img src="assets/svg/twitter.svg" alt="Twitter Account" />
+                    </a>
                     <a href="https://www.instagram.com/wordoftheday_insta/" aria-label="Instagram" title="Instagram Account">
                         <img src="assets/svg/instagram.svg" alt="Instagram Account" />
                     </a>
-                    <a href="https://github.com/Word-of-the-Day-2025" aria-label="GitHub" title="GitHub Repository">
+                    <a href="https://github.com/gaming-gaming/Word-of-the-Day" aria-label="GitHub" title="GitHub Repository">
                         <img src="assets/svg/github.svg" alt="GitHub Repository" />
                     </a>
                 <div class="divider-vertical"></div>
@@ -89,15 +103,19 @@
                 <li><a href="/subscribe">Subscribe</a></li>
                 <li><a href="/about">About</a></li>
                 <li><a href="/api">API</a></li>
-                <li><a href="/contact">Contact</a></li>
+                <li><a href="mailto:2025wordoftheday@gmail.com">Contact</a></li>
+                <li><a href="/databases">Databases</a></li>
             </ul>
         </nav>
         <div class="divider-horizontal"></div>
         <div class="mobile-social-icons">
+            <a href="https://x.com/WordOfTheDay_X" aria-label="Twitter" title="Twitter Account">
+                <img src="assets/svg/twitter_secondary.svg" alt="Twitter Account" />
+            </a>
             <a href="https://www.instagram.com/wordoftheday_insta/" aria-label="Instagram" title="Instagram Account">
                 <img src="assets/svg/instagram_secondary.svg" alt="Instagram Account" />
             </a>
-            <a href="https://github.com/Word-of-the-Day-2025" aria-label="GitHub" title="GitHub Repository">
+            <a href="https://github.com/gaming-gaming/Word-of-the-Day" aria-label="GitHub" title="GitHub Repository">
                 <img src="assets/svg/github_secondary.svg" alt="GitHub Repository" />
             </a>
         </div>
@@ -117,7 +135,8 @@
             <nav class="footer-nav">
                 <ul>
                     <li><a href="/api">API</a></li>
-                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="mailto:2025wordoftheday@gmail.com">Contact</a></li>
+                    <li><a href="/databases">Databases</a></li>
                 </ul>
             </nav>
         </div>
@@ -127,5 +146,4 @@
     <script defer src="js/mobile-menu.js"></script>
     <script defer src="js/toggle-theme.js"></script>
 </body>
-
 </html>
