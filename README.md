@@ -4,7 +4,7 @@
 
 # Word of the Day
 [![Managed by Sesquipedalians](https://raw.githubusercontent.com/Word-of-the-Day-2025/WOTD-Brand-Assets/main/badges/Managed_by-Sesquipedalians-%231976d2.svg)](https://wotd.site)
-[![Version](https://raw.githubusercontent.com/Word-of-the-Day-2025/WOTD-Brand-Assets/main/badges/Version-1.2.0-%2376d219.svg)](https://github.com/gaming-gaming/Word-of-the-Day/releases/)
+[![Version](https://raw.githubusercontent.com/Word-of-the-Day-2025/WOTD-Brand-Assets/main/badges/Version-1.3.0-%2376D219.svg)](https://github.com/gaming-gaming/Word-of-the-Day/releases/)
 [![Free API for Developers](https://raw.githubusercontent.com/Word-of-the-Day-2025/WOTD-Brand-Assets/main/badges/Free_API_for_Developers-%23d21976.svg)](https://wotd.site/api)
 [![License](https://raw.githubusercontent.com/Word-of-the-Day-2025/WOTD-Brand-Assets/main/badges/License-Apache%202.0-gradient.svg)](LICENSE)
 
@@ -35,7 +35,7 @@ Inside the extension's folder is a `config.json` file for configuring the site, 
 There is also a `messages/` folder for messages sent via the contact page, which contains json files of user mail.
 
 The API has a variety of endpoints for developers to use:
-- **/query?date={date}**: Gets the WOTD for a specific date (format: DD-MM-YYYY). If no date is provided, it defaults to the current date.
+- **/query?date={date}**: Gets the WOTD for a specific date (format: YYYY-MM-DD). If no date is provided, it defaults to the current date.
 - **/query_previous?date={date}&limit={limit}**: Gets a list of previous WOTDs. The date parameter is optional and defaults to the current date. The limit parameter specifies how many previous WOTDs to return (default is 3, maximum is 8).
 - **/find_wotd?word={word}**: Searches for a specific word in the WOTD database. The word parameter is required.
 
