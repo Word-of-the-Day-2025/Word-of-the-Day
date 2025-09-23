@@ -2,6 +2,7 @@ import asyncio
 import colorama
 from colorama import Fore
 import importlib
+import json
 import os
 import sys
 import time
@@ -13,6 +14,19 @@ colorama.init(autoreset=True)
 
 EXT_PATH = os.path.join(os.path.dirname(__file__), 'extensions')
 SPLASH_PATH = os.path.join(os.path.dirname(__file__), '..', 'dat', 'splash.txt')
+
+# Load config.json
+CONFIG_PATH = os.path.join(os.path.dirname(__file__), '..', 'config.json')
+log_info(f'Loading config from {CONFIG_PATH}')
+try:
+    with open(CONFIG_PATH, 'r', encoding='utf-8') as f:
+        config = json.load(f)
+except Exception as e:
+    log_exception(f'Failed to load config file: {e}')
+    sys.exit(1)
+MAIN_DOMAIN = config.get('mainDomain')
+API_DOMAIN = config.get('apiDomain')
+VERSION = config.get('version')
 
 # Function to print the splash screen (Giant ASCII art that says "WOTD", can be changed in the splash.txt file)
 def print_splash(margin: int = 0):
