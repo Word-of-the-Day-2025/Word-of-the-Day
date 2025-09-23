@@ -1022,9 +1022,9 @@ async def send_wotd_loop():
         try:
             # Wait until the next hour
             now = datetime.datetime.now(tz.tzutc())
-            next_hour = (now + timedelta(hours=1)).replace(minute=0, second=0, microsecond=0)
-            sleep_time = (next_hour - now).total_seconds()
-            log_info(f'Waiting for {sleep_time} seconds until the next hour...')
+            next_half_hour = (now + timedelta(minutes=30)).replace(second=0, microsecond=0)
+            sleep_time = (next_half_hour - now).total_seconds()
+            log_info(f'Waiting for {sleep_time} seconds until the next half hour...')
             await asyncio.sleep(sleep_time)
 
             # Get the current hour in UTC
@@ -1044,7 +1044,9 @@ async def send_wotd_loop():
 
             # Find the subscribers who want to receive the Word of the Day at this hour
             current_second = current_hour * 3600
-            subscribers_list = subscribers.query_next_subscribers(current_second, day_of_week=current_datetime.weekday())
+            weekday_names = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+            day_of_week_str = weekday_names[current_datetime.weekday()]
+            subscribers_list = subscribers.query_next_subscribers(current_second, day_of_week=day_of_week_str)
             
             # Add debug logging to see what's happening
             log_info(f'Looking for subscribers at time: {current_second} seconds (hour {current_hour})')
