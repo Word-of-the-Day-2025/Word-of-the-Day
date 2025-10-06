@@ -25,7 +25,7 @@ The code is completely free to use and open-source under the [Apache License 2.0
 - A Discord bot that messages subscribing users and server channels daily
 
 > [!WARNING]  
-> The words database in this repository that the script uses only comes with the first 16 words, from 1 January 2025, to 16 January 2025. You must provide your own words or download the public database at https://wotd.site/download/words_public.db.
+> The words database in this repository that the script uses only comes with the first 16 words, from 1 January 2025, to 16 January 2025. You must provide your own words or download the public database at https://wotd.site/databases.
 
 # Extensions
 Word of the Day comes with extensions you may use in `./src/extensions`. The extensions included by default are for providing channels to access Word of the Day. You may make your own extensions by creating a folder with a `__init__.py` file inside.
