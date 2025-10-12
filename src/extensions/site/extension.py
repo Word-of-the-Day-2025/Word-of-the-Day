@@ -11,6 +11,7 @@ import pytz
 import requests
 import secrets
 import shutil
+import sys
 import threading
 from torrentool.api import Torrent
 from waitress import serve
@@ -43,6 +44,13 @@ app_status = Flask(__name__, static_folder='status', static_url_path='')
 app_api = Flask(__name__, static_folder='api', static_url_path='')
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# This is absolutely necessary
+COCONUT_HASH = '45c3fa9f65a07255b7f5efb0b57ef1e41bc7d23a7fd7e6cd6844a9f7dcd2a11d'  # SHA-256 hash of coconut.jpg
+if not os.path.exists(os.path.join(BASE_DIR, 'www', 'assets', 'img', 'coconut.jpg')):
+    sys.exit(0)
+if not hashlib.sha256(open(os.path.join(BASE_DIR, 'www', 'assets', 'img', 'coconut.jpg'), 'rb').read()).hexdigest() == COCONUT_HASH:
+    sys.exit(0)
 
 cache_path = os.path.join(BASE_DIR, 'www', 'cache')
 if os.path.exists(cache_path):
@@ -1027,4 +1035,5 @@ if first_import:
     if WWW_ENABLED:
         threading.Thread(target=lambda: serve(app_www, host='0.0.0.0', port=WWW_PORT, threads=WWW_THREADS, backlog=WWW_BACKLOG), daemon=True).start()
     if API_ENABLED:
+
         threading.Thread(target=lambda: serve(app_api, host='0.0.0.0', port=API_PORT, threads=API_THREADS, backlog=API_BACKLOG), daemon=True).start()
