@@ -65,19 +65,17 @@ Admins have access to advanced commands unavailable to regular users:
 ```bash
 git clone https://github.com/gaming-gaming/Word-of-the-Day.git
 cd Word-of-the-Day
-pip install -r requirements.txt
-bash start.sh
+pip3 install -r requirements.txt
+sudo bash start.sh
 ```
-#### Windows:
-```bash
+#### Windows (CMD as admin):
+```cmd
 git clone https://github.com/gaming-gaming/Word-of-the-Day.git
 cd Word-of-the-Day
 pip install -r requirements.txt
 start.bat
 ```
 
-<div align="center">
-
-#### Thank you for using Word of the Day!
-
-</div>
+<h4 align="center">
+  Thank you for using <img src="https://raw.githubusercontent.com/Word-of-the-Day-2025/WOTD-Brand-Assets/main/logos/accent/wotd-logo.svg" height=12em style="vertical-align: middle;">!
+</h4>
