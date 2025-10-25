@@ -7,6 +7,8 @@ config.json
 
 /dat/wotd.db
 /dat/splash.txt
+/dat/backups/
+/dat/backups/**
 
 /log/
 /log/**
@@ -17,5 +19,3 @@ config.json
 
 /src/extensions/site/.env
 /src/extensions/site/config.json
-/src/extensions/site/messages/
-/src/extensions/site/messages/**
