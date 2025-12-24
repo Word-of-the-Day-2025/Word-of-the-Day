@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}404 · Word of the Day{% endblock %}
+
+{% block content %}
+<article class="page-content">
+    <!-- 404 Section -->
+    <section class="section">
+        <h1 class="heading-primary">404 - Page Not Found</h1>
+        <img 
+            src="{{ url_for('static', filename='assets/img/404.png') }}" 
+            alt="Huh?"
+            class="error-image"
+        >
+    </section>
+</article>
+{% endblock %}

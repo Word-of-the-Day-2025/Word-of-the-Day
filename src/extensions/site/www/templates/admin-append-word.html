@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin · Word of the Day{% endblock %}
+
+{% block content %}
+<form class="page-content">
+    <h1 class="heading-primary">Append WOTD Entry</h1>
+
+    <div class="form-group">
+        <label>Word</label>
+        <input type="text" id="word-input" name="word" required>
+
+        <label>IPA</label>
+        <input type="text" id="ipa-input" name="ipa">
+
+        <label>Part of Speech</label>
+        <input type="text" id="pos-input" name="pos">
+
+        <label>Definition</label>
+        <textarea id="definition-input" name="definition" rows="4" required></textarea>
+        
+        <button type="submit" class="button submit-button">Append Entry</button>
+    </div>
+
+    <script defer src="{{ url_for('static', filename='js/admin-append-word.js') }}"></script>
+</form>
+{% endblock %}

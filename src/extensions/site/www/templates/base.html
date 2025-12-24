@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Word of the Day{% endblock %}</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Word of the Day is a free and open-source service that posts interesting and uncommon words daily." />
+    <meta name="keywords" content="vocabulary, language, dictionary, word of the day, wotd, English" />
+    <meta name="author" content="Word of the Day Contributors" />
+    
+    <!-- Open Graph / Discord / Facebook -->
+    <meta property="og:title" content="WOTD · Word of the Day, Every Day.">
+    <meta property="og:description" content="Word of the Day is a free and open-source service that posts interesting and uncommon words daily.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://wotd.site/">
+    <meta property="og:image" content="{{ url_for('static', filename='assets/img/preview.png', _external=True) }}">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="WOTD · Word of the Day, Every Day.">
+    <meta name="twitter:description" content="Word of the Day is a free and open-source service that posts interesting and uncommon words daily.">
+    <meta name="twitter:image" content="{{ url_for('static', filename='assets/img/preview.png', _external=True) }}">
+    
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="{{ device_type }}" style="min-height: 100vh; display: flex; flex-direction: column;">
+    {% include 'partials/header.html' %}
+    {% include 'partials/mobile-menu.html' %}
+    
+    <main class="site-main container {% block main_class %}{% endblock %}" aria-label="{% block aria_label %}{% endblock %}">
+        {% block content %}{% endblock %}
+    </main>
+    
+    <div style="flex: 1;"></div>
+    
+    {% include 'partials/footer.html' %}
+    
+    <!-- Scripts -->
+    <script defer src="{{ url_for('static', filename='js/mobile-menu.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/toggle-theme.js') }}"></script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

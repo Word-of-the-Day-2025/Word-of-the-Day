@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}Configure Discord Bot Settings · Word of the Day{% endblock %}
+
+{% block content %}
+<form class="page-content">
+    <h1 class="heading-primary">Configure Discord Bot Settings</h1>
+    <div class="card discord-config-card">
+        <img
+            src="data:image/png;base64,{{ discord_icon_base64 }}"
+            alt="Discord Icon"
+            class="discord-icon"
+        />
+        <span class="discord-name">{{ discord_name }}</span>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <h2 class="heading-secondary">Time Settings</h2>
+    <div class="form-group">
+        <div class="dropdown-group">
+            <label for="timezone-select">Time Zone:</label>
+            <select id="timezone-select" name="time-zone">
+                {% for tz in timezones %}
+                <option value="{{ tz }}" {% if tz == selected_timezone %}selected{% endif %}>{{ tz }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <!--
+        <div class="checkbox-group">
+            <label>
+                <input type="checkbox" id="times-per-weekday" name="times-per-weekday" {% if times_per_weekday %}checked{% endif %}>
+                Set different times for each day of the week
+            </label>
+        </div>
+        -->
+        <div id="time-inputs">
+            <div class="time-input-group">
+                <label for="time-single">Time:</label>
+                <input type="time" id="time-single" name="time-single" value="{{ single_time }}">
+            </div>
+        </div>
+    </div>
+
+    <h2 class="heading-secondary">Message Settings</h2>
+    <div class="checkbox-group">
+        <label>
+            <input type="checkbox" name="include-date" {% if include_date %}checked{% endif %}>
+            Include Date
+        </label>
+        <label>
+            <input type="checkbox" name="include-ipa" {% if include_ipa %}checked{% endif %}>
+            Include IPA Pronunciation
+        </label>
+        <label>
+            <input type="checkbox" name="is-dmy" {% if is_dmy %}checked{% endif %}>
+            Use Day-Month-Year Format
+        </label>
+        <label>
+            <input type="checkbox" name="silent-mode" {% if silent_mode %}checked{% endif %}>
+            Send Message Silently (No Notification)
+        </label>
+    </div>
+
+    <h2 class="heading-secondary">Date Formatting</h2>
+    <div class="radio-group">
+        <label>
+            <input type="radio" name="date-format" value="Long" {% if date_format == 'Long' %}checked{% endif %}>
+            Long (e.g., "Wednesday, January 1st, 2025" or "Wednesday, 1 January 2025")
+        </label>
+        <label>
+            <input type="radio" name="date-format" value="Medium" {% if date_format == 'Medium' %}checked{% endif %}>
+            Medium (e.g., "January 1st, 2025" or "1 January 2025")
+        </label>
+        <label>
+            <input type="radio" name="date-format" value="ShortHyphen" {% if date_format == 'ShortHyphen' %}checked{% endif %}>
+            Short, hyphenated (e.g., "1-1-2025")
+        </label>
+        <label>
+            <input type="radio" name="date-format" value="ShortSlash" {% if date_format == 'ShortSlash' %}checked{% endif %}>
+            Short, slashed (e.g., "1/1/2025")
+        </label>
+    </div>
+    <p class="subtext">
+        Message date styles are affected by the "Use Day-Month-Year Format" option in the Message Settings section.
+    </p>
+
+    <div class="section-divider"></div>
+
+    <div class="form-actions">
+        <button type="submit" class="button">Save Settings</button>
+        <button type="reset" class="button">Reset Settings</button>
+        <button type="forget" class="button button--danger">Forget/Unsubscribe</button>
+    </div>
+
+    <script defer src="{{ url_for('static', filename='js/config-discord.js') }}"></script>
+</form>
+{% endblock %}

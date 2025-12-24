@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Databases · Word of the Day{% endblock %}
+
+{% block content %}
+<article class="page-content">
+    <h1 class="heading-primary">Databases</h1>
+    <p>
+        Each month, WOTD releases an updated database containing all data for words that have been featured as the Word of the Day since the service's launch.
+        All databases are provided in SQLite format, with the structure for each row in the <code class="inline-code">words</code> table as follows:
+        <ul>
+            <li><strong><code class="inline-code">date (STRING) (PRIMARY KEY)</code></strong>: The date the word was featured, in YYYY-MM-DD format.</li>
+            <li><strong><code class="inline-code">word (STRING)</code></strong>: The featured word.</li>
+            <li><strong><code class="inline-code">ipa (STRING)</code></strong>: The International Phonetic Alphabet representation of the word's pronunciation.</li>
+            <li><strong><code class="inline-code">pos (STRING)</code></strong>: The part of speech of the word (e.g., noun, verb, adjective).</li>
+            <li><strong><code class="inline-code">definition (STRING)</code></strong>: The definition of the word.</li>
+        </ul>
+    </p>
+
+    <div class="section-divider"></div>
+
+    {% if databases|length >= 1 %}
+    <h2 class="heading-secondary">Download the Latest Database:</h2>
+    <section class="card database-card">
+        <p class="database-month">{{ databases[0].month }}</p>
+        <p class="database-filename">{{ databases[0].filename }}</p>
+        <div style="flex-grow: 1;"></div> <!-- Pushes the icon to the right -->
+        <p class="database-filesize">{{ databases[0].filesize }}</p>
+        <a href="/databases/download/{{ databases[0].filename }}" download>
+            <img 
+                src="{{ url_for('static', filename='assets/svg/download.svg') }}" 
+                alt="Database Icon"
+                class="database-icon"
+            />
+        </a>
+    </section>
+    {% endif %}
+    {% if databases|length > 1 %}
+    <h2 class="heading-secondary">Download Previous Databases:</h2>
+    {% for db in databases[1:] %}
+    <section class="card database-card">
+        <p class="database-month">{{ db.month }}</p>
+        <p class="database-filename">{{ db.filename }}</p>
+        <div style="flex-grow: 1;"></div> <!-- Pushes the icon to the right -->
+        <p class="database-filesize">{{ db.filesize }}</p>
+        <a href="/databases/download/{{ db.filename }}" download>
+            <img 
+                src="{{ url_for('static', filename='assets/svg/download.svg') }}" 
+                alt="Database Icon"
+                class="database-icon"
+            />
+        </a>
+    </section>
+    {% endfor %}
+    {% else %}
+    <section class="no-databases" style="text-align: center; margin: 1rem;">
+        <p>No databases available at this time :(</p>
+    </section>
+    {% endif %}
+</article>
+{% endblock %}

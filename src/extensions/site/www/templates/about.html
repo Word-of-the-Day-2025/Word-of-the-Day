@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}About · Word of the Day{% endblock %}
+
+{% block content %}
+<article class="page-content">
+    <!-- About Section -->
+    <section class="section">
+        <h1 class="heading-primary">About {{ wotd }}</h1>
+        
+        <div class="content-block">
+            <h2 class="heading-secondary">What is {{ wotd }}?</h2>
+            <p>
+                {{ wotd }} is a free and open-source service that posts an interesting and uncommon word every day at midnight UTC.
+                The word is accompanied by its pronunciation, definition, and part of speech, provided by <a href="https://www.wiktionary.org/">Wiktionary</a>.
+                You can subscribe to {{ wotd }} via Discord, or use the <a href="/api">free API</a>.
+            </p>
+        </div>
+
+        <div class="content-block">
+            <h2 class="heading-secondary">How Can I Support {{ wotd }}?</h2>
+            <p>
+                There is no way to support us financially because we don't need money. Go donate to the <a href="https://wikimediafoundation.org/">Wikimedia Foundation</a> instead, they provide word information on Wiktionary.
+                However, you may contribute to the project on <a href="https://github.com/Word-of-the-Day-2025/Word-of-the-Day">GitHub</a> by reporting bugs, suggesting features, or submitting pull requests.
+            </p>
+        </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- Attribution Section -->
+    <section class="section">
+        <h1 class="heading-primary">Attribution</h1>
+        
+        <div class="content-block">
+            <h2 class="heading-secondary">APIs Used</h2>
+            <p>
+                Word of the Day uses <a href="https://www.wiktionary.org/">Wiktionary</a> to get word definitions, pronunciations, and parts of speech.
+            </p>
+        </div>
+
+        <div class="content-block">
+            <h2 class="heading-secondary">Fonts Used</h2>
+            <p>
+                Text on this site uses <a href="https://github.com/rsms/inter">Inter</a>, a free and open-source typeface.
+                Monospace text (Such as code blocks shown on the API documentation page) uses <a href="https://www.jetbrains.com/lp/mono/">JetBrains Mono</a>, a free and open-source typeface designed for programming.
+                The WOTD logo is <a href="https://dejavu-fonts.github.io/">DejaVu Serif Bold</a>.
+            </p>
+        </div>
+
+        <div class="content-block">
+            <h2 class="heading-secondary">Artwork Used</h2>
+            <p>
+                Abstract background art used for the site preview embed and social media banners are from <a href="https://www.vecteezy.com/free-png/abstract-technology">Vecteezy</a>.
+            </p>
+        </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- Quote Section -->
+    <section class="section">
+        <div class="quote-card">
+            <img src="https://avatars.githubusercontent.com/u/142280747" alt="GitHub Profile Picture" class="quote-card__avatar" onclick="window.open('{{ github_url }}')" />
+            <div class="quote-card__content">
+                <p class="quote-card__author">
+                    {{ github_username }}
+                    <span class="quote-card__role">{{ wotd }} Lead Developer</span>
+                </p>
+                <blockquote class="quote-card__text">
+                    "WOTD is the Word of the Day service that Merriam-Webster and Oxford wish they had. Frickin' nerds."
+                </blockquote>
+            </div>
+        </div>
+    </section>
+</article>
+{% endblock %}

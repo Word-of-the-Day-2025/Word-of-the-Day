@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} · Word of the Day{% endblock %}
+
+{% block content %}
+<article class="page-content">
+    {{ content|safe }}
+</article>
+{% endblock %}

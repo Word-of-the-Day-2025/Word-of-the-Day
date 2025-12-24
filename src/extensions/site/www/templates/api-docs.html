@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% block title %}API Docs · Word of the Day{% endblock %}
+
+{% block content %}
+<article class="page-content">
+    <h1 class="heading-primary">API {{ docs }}</h1>
+    <p>
+        Welcome to the Word of the Day API documentation. This API provides access to the daily word, its definition, and usage examples.
+        The base URL for all API requests is <code class="inline-code">https://api.wotd.site</code>, you may use the API for free,
+        but please note that it is rate-limited to 10 requests per minute. The API cannot be used to request future WOTDs.
+    </p>
+
+    <section>
+        <h2 class="heading-secondary">Endpoints</h2>
+        <ul>
+            <li>
+            <code class="inline-code">/query?date={date}</code> - Gets the WOTD for a specific date (format: YYYY-MM-DD). If no date is provided, it defaults to the current date.
+            </li>
+            <li>
+            <code class="inline-code">/query_previous?date={date}&limit={limit}</code> - Gets a list of previous WOTDs. The date parameter is optional and defaults to the current date. The limit parameter specifies how many previous WOTDs to return (default is 3, maximum is 8).
+            </li>
+            <li>
+            <code class="inline-code">/find_wotd?word={word}</code> - Searches for a specific word in the WOTD database. The word parameter is required.
+            </li>
+        </ul>
+    </section>
+
+    <!--
+        Before you read any further, I would like to apologize for the messy code blocks.
+        I don't know how to make it any cleaner.
+
+        Good luck,
+        @gaming-gaming (GitHub)
+    -->
+    <section>
+        <h2 class="heading-secondary"><code>/query?date={date}</code></h2>
+        <p>Retrieves the Word of the Day for a specific date. If no date is provided, it defaults to the current date.</p>
+        <p>Example request:</p>
+        <div class="code-block">
+            <pre><code><span style="color: var(--magenta);">GET</span> <span style="color: var(--http-value);">/query?date=2025-01-01 HTTP/1.1</span></code></pre>
+            <pre><code><span style="color: var(--http-value);">Host:</span> <span style="color: var(--primary-text);">api.wotd.site</span></code></pre>
+            <pre><code><span style="color: var(--http-value);">Accept:</span> <span style="color: var(--primary-text);">application/json</span></code></pre>
+        </div>
+        <p>Example response:</p>
+        <div class="code-block">
+            <pre><code><span style="color: var(--yellow);">{</span></code></pre>
+            <pre><code><span style="color: var(--green);">  "date"</span><span style="color: var(--secondary-text);">:</span><span style="color: var(--magenta);"> "2025-01-01"</span><span style="color: var(--secondary-text);">,</span></code></pre>
+            <pre><code><span style="color: var(--green);">  "word"</span><span style="color: var(--secondary-text);">:</span><span style="color: var(--magenta);"> "sesquipedalian"</span><span style="color: var(--secondary-text);">,</span></code></pre>
+            <pre><code><span style="color: var(--green);">  "pos"</span><span style="color: var(--secondary-text);">:</span><span style="color: var(--magenta);"> "Noun"</span><span style="color: var(--secondary-text);">,</span></code></pre>
+            <pre><code><span style="color: var(--green);">  "ipa"</span><span style="color: var(--secondary-text);">:</span><span style="color: var(--magenta);"> "/ˈsɛs.kwɪ.pɪˈdeɪ.lɪ.ən/"</span><span style="color: var(--secondary-text);">,</span></code></pre>
+            <pre><code><span style="color: var(--green);">  "definition"</span><span style="color: var(--secondary-text);">:</span><span style="color: var(--magenta);"> "A person who uses long words."</span></code></pre>
+            <pre><code><span style="color: var(--yellow);">}</span></code></pre>
+        </div>
+    </section>
+
+    <section>
+        <h2 class="heading-secondary"><code>/query_previous?date={date}&limit={limit}</code></h2>
+        <p>Retrieves a list of previous Words of the Day. The date parameter is optional and defaults to the current date. The limit parameter specifies how many previous WOTDs to return (default is 3, maximum is 8).</p>
+        <p>Example request:</p>
+        <div class="code-block">
+            <pre><code><span style="color: var(--magenta);">GET</span> <span style="color: var(--http-value);">/query_previous?date=2025-01-17&limit=3 HTTP/1.1</span></code></pre>
+            <pre><code><span style="color: var(--http-value);">Host:</span> <span style="color: var(--primary-text);">api.wotd.site</span></code></pre>
+            <pre><code><span style="color: var(--http-value);">Accept:</span> <span style="color: var(--primary-text);">application/json</span></code></pre>
+        </div>
+        <p>Example response:</p>
+        <div class="code-block">
+            <pre><code><span style="color: var(--yellow);">{</span></code></pre>
+                <pre><code><span style="color: var(--green);">  "has_more"</span><span style="color: var(--secondary-text);">:</span> <span style="color: var(--orange);">true</span><span style="color: var(--secondary-text);">,</span> </code></pre>
+                <pre><code><span style="color: var(--green);">  "results"</span><span style="color: var(--secondary-text);">:</span> <span style="color: var(--pink);">[</span></code></pre>
+                <pre><code><span style="color: var(--turquoise);">    {</span></code></pre>
+                    <pre><code><span style="color: var(--green);">      "date"</span><span style="color: var(--secondary-text);">:</span><span style="color: var(--magenta);"> "2025-01-16"</span><span style="color: var(--secondary-text);">,</span></code></pre>
+                    <pre><code><span style="color: var(--green);">      "word"</span><span style="color: var(--secondary-text);">:</span><span style="color: var(--magenta);"> "octothorpe"</span><span style="color: var(--secondary-text);">,</span></code></pre>
+                    <pre><code><span style="color: var(--green);">      "pos"</span><span style="color: var(--secondary-text);">:</span><span style="color: var(--magenta);"> "Noun"</span><span style="color: var(--secondary-text);">,</span></code></pre>
+                    <pre><code><span style="color: var(--green);">      "ipa"</span><span style="color: var(--secondary-text);">:</span><span style="color: var(--magenta);"> "/ˈɒktəʊθɔːp/"</span><span style="color: var(--secondary-text);">,</span></code></pre>
+                    <pre><code><span style="color: var(--green);">      "definition"</span><span style="color: var(--secondary-text);">:</span><span style="color: var(--magenta);"> "(chiefly US, typography) The hash or square symbol #, used mainly in telephony and computing."</span></code></pre>
+                <pre><code><span style="color: var(--turquoise);">    }</span><span style="color: var(--secondary-text);">,</span></code></pre>
+                <pre><code><span style="color: var(--turquoise);">    {</span></code></pre>
+                    <pre><code><span style="color: var(--green);">      "date"</span><span style="color: var(--secondary-text);">:</span><span style="color: var(--magenta);"> "2025-01-15"</span><span style="color: var(--secondary-text);">,</span></code></pre>
+                    <pre><code><span style="color: var(--green);">      "word"</span><span style="color: var(--secondary-text);">:</span><span style="color: var(--magenta);"> "loquacious"</span><span style="color: var(--secondary-text);">,</span></code></pre>
+                    <pre><code><span style="color: var(--green);">      "pos"</span><span style="color: var(--secondary-text);">:</span><span style="color: var(--magenta);"> "Adjective"</span><span style="color: var(--secondary-text);">,</span></code></pre>
+                    <pre><code><span style="color: var(--green);">      "ipa"</span><span style="color: var(--secondary-text);">:</span><span style="color: var(--magenta);"> "/ləʊˈkweɪʃəs/"</span><span style="color: var(--secondary-text);">,</span></code></pre>
+                    <pre><code><span style="color: var(--green);">      "definition"</span><span style="color: var(--secondary-text);">:</span><span style="color: var(--magenta);"> "Talkative; chatty."</span></code></pre>
+                <pre><code><span style="color: var(--turquoise);">    }</span><span style="color: var(--secondary-text);">,</span></code></pre>
+                <pre><code><span style="color: var(--turquoise);">    {</span></code></pre>
+                    <pre><code><span style="color: var(--green);">      "date"</span><span style="color: var(--secondary-text);">:</span><span style="color: var(--magenta);"> "2025-01-14"</span><span style="color: var(--secondary-text);">,</span></code></pre>
+                    <pre><code><span style="color: var(--green);">      "word"</span><span style="color: var(--secondary-text);">:</span><span style="color: var(--magenta);"> "melancholy"</span><span style="color: var(--secondary-text);">,</span></code></pre>
+                    <pre><code><span style="color: var(--green);">      "pos"</span><span style="color: var(--secondary-text);">:</span><span style="color: var(--magenta);"> "Noun"</span><span style="color: var(--secondary-text);">,</span></code></pre>
+                    <pre><code><span style="color: var(--green);">      "ipa"</span><span style="color: var(--secondary-text);">:</span><span style="color: var(--magenta);"> "/ˈmɛlənˌkəlɪ/"</span><span style="color: var(--secondary-text);">,</span></code></pre>
+                    <pre><code><span style="color: var(--green);">      "definition"</span><span style="color: var(--secondary-text);">:</span><span style="color: var(--magenta);"> "(historical) Black bile, formerly thought to be one of the four \"cardinal humours\" of animal bodies."</span></code></pre>
+                <pre><code><span style="color: var(--turquoise);">    }</span></code></pre>
+                <pre><code><span style="color: var(--pink);">  ]</span></code></pre>
+            <pre><code><span style="color: var(--yellow);">}</span></code></pre>
+    </section>
+
+    <section>
+        <h2 class="heading-secondary"><code>/find_wotd?word={word}</code></h2>
+        <p>Searches for a specific word in the Word of the Day database. The word parameter is required.</p>
+        <p>Example request:</p>
+        <div class="code-block">
+            <pre><code><span style="color: var(--magenta);">GET</span> <span style="color: var(--http-value);">/find_wotd?word=sesquipedalian HTTP/1.1</span></code></pre>
+            <pre><code><span style="color: var(--http-value);">Host:</span> <span style="color: var(--primary-text);">api.wotd.site</span></code></pre>
+            <pre><code><span style="color: var(--http-value);">Accept:</span> <span style="color: var(--primary-text);">application/json</span></code></pre>
+        </div>
+        <p>Example response:</p>
+        <div class="code-block">
+            <pre><code><span style="color: var(--yellow);">[</span></code></pre>
+                <pre><code><span style="color: var(--pink);">  {</span></code></pre>
+                    <pre><code><span style="color: var(--green);">    "date"</span><span style="color: var(--secondary-text);">:</span><span style="color: var(--magenta);"> "2035-01-01"</span><span style="color: var(--secondary-text);">,</span></code></pre>
+                    <pre><code><span style="color: var(--green);">    "word"</span><span style="color: var(--secondary-text);">:</span><span style="color: var(--magenta);"> "sesquipedalian"</span><span style="color: var(--secondary-text);">,</span></code></pre>
+                    <pre><code><span style="color: var(--green);">    "pos"</span><span style="color: var(--secondary-text);">:</span><span style="color: var(--magenta);"> "Adjective"</span><span style="color: var(--secondary-text);">,</span></code></pre>
+                    <pre><code><span style="color: var(--green);">    "ipa"</span><span style="color: var(--secondary-text);">:</span><span style="color: var(--magenta);"> "/ˈsɛs.kwɪ.pɪˈdeɪ.lɪ.ən/"</span><span style="color: var(--secondary-text);">,</span></code></pre>
+                    <pre><code><span style="color: var(--green);">    "definition"</span><span style="color: var(--secondary-text);">:</span><span style="color: var(--magenta);"> "(of a word or words) Long; polysyllabic."</span></code></pre>
+                <pre><code><span style="color: var(--pink);">  }</span><span style="color: var(--secondary-text);">,</span></code></pre>
+                <pre><code><span style="color: var(--pink);">  {</span></code></pre>
+                    <pre><code><span style="color: var(--green);">    "date"</span><span style="color: var(--secondary-text);">:</span><span style="color: var(--magenta);"> "2025-01-01"</span><span style="color: var(--secondary-text);">,</span></code></pre>
+                    <pre><code><span style="color: var(--green);">    "word"</span><span style="color: var(--secondary-text);">:</span><span style="color: var(--magenta);"> "sesquipedalian"</span><span style="color: var(--secondary-text);">,</span></code></pre>
+                    <pre><code><span style="color: var(--green);">    "pos"</span><span style="color: var(--secondary-text);">:</span><span style="color: var(--magenta);"> "Noun"</span><span style="color: var(--secondary-text);">,</span></code></pre>
+                    <pre><code><span style="color: var(--green);">    "ipa"</span><span style="color: var(--secondary-text);">:</span><span style="color: var(--magenta);"> "/ˈsɛs.kwɪ.pɪˈdeɪ.lɪ.ən/"</span><span style="color: var(--secondary-text);">,</span></code></pre>
+                    <pre><code><span style="color: var(--green);">    "definition"</span><span style="color: var(--secondary-text);">:</span><span style="color: var(--magenta);"> "A person who uses long words."</span></code></pre>
+                <pre><code><span style="color: var(--pink);">  }</span></code></pre>
+            <pre><code><span style="color: var(--yellow);">]</span></code></pre>
+    </section>
+
+    <section>
+        <h2 class="heading-secondary">Contact Info</h2>
+        <p>If you have questions or need further assistance, please contact us at <a href="mailto:2025wordoftheday@gmail.com">2025wordoftheday@gmail.com</a>.</p>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section>
+        <h1 class="heading-primary">Usage Guidelines</h1>
+        <p>Please adhere to the following guidelines when using the Word of the Day API:</p>
+        <ul>
+            <li>Attribution: Please give attribution to WOTD when using the API in your applications or services.</li>
+            <li>Rate Limiting: The API is rate-limited to 10 requests per minute. Exceeding this limit will result in temporary access restrictions.</li>
+            <li>Data Scraping: Do not scrape our data excessively. If you need to download a full copy of the WOTD database, you can do so <a href="/databases">here</a>.</li>
+            <li>Commercial Use: Don't charge money for the Word of the Day, our service should remain free for all users.</li>
+        </ul>
+        <p>Thank you for using the WOTD API :)</p>
+    </section>
+</article>
+{% endblock %}

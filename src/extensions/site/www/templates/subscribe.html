@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}Subscribe · Word of the Day{% endblock %}
+
+{% block content %}
+<article class="page-content">
+    <h1 class="heading-primary">Subscribe to {{ wotd }}</h1>
+
+    <!-- Subscription Section -->
+    <section class="section subscription-section">
+        <div class="card subscription-card">
+            <img 
+                src="{{ url_for('static', filename='assets/svg/discord.svg') }}" 
+                alt="Discord Logo"
+                class="subscription-image"
+            >
+            <h2 class="heading-secondary">Add the Discord Bot</h2>
+            <p>
+                Add the Word of the Day bot to your server or DMs to receive the Word of the Day.
+            </p>
+            <button
+                class="button"
+                onclick="window.open('https://discord.com/oauth2/authorize?client_id=1322109562119000149&permissions=0&integration_type=0&scope=bot', '_blank', 'noopener,noreferrer')"
+            >
+                Add Discord Bot
+            </button>
+        </div>
+        <div class="card subscription-card">
+            <img 
+                src="{{ url_for('static', filename='assets/svg/twitter.svg') }}" 
+                alt="Twitter Logo"
+                class="subscription-image"
+            >
+            <h2 class="heading-secondary">Follow on Twitter</h2>
+            <p>
+                Follow our Twitter account to get WOTD news directly in your feed.
+            </p>
+            <button
+                class="button"
+                onclick="window.open('https://x.com/WordOfTheDay_X', '_blank', 'noopener,noreferrer')"
+            >
+                Follow on Twitter
+            </button>
+        </div>
+        <div class="card subscription-card">
+            <img 
+                src="{{ url_for('static', filename='assets/svg/api.svg') }}" 
+                alt="API Logo"
+                class="subscription-image"
+            >
+            <h2 class="heading-secondary">Use the API</h2>
+            <p>
+                Use our API to fetch the Word of the Day for your own applications or services.
+            </p>
+            <button
+                class="button"
+                onclick="window.open('/articles/api-docs', '_blank', 'noopener,noreferrer')"
+            >
+                View API Docs
+            </button>
+        </div>
+    </section>
+    
+    <div class="section-divider"></div>
+
+    <h1 class="heading-primary">More Subscription Options Coming Soon...</h1>
+
+    {% endblock %}
+</article>
