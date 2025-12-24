@@ -1,0 +1,9 @@
+{
+    "admins": [
+        0,
+        1,
+        2,
+        3
+    ],
+    "max_subscriptions_per_guild": 2
+}
