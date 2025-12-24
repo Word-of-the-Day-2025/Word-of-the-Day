@@ -1,0 +1,89 @@
+<meta name="static-base-url" content="{{ url_for('static', filename='') }}">
+<header class="site-header">
+    <!-- Mobile Header -->
+    <div class="site-header__mobile">
+        <button 
+            class="mobile-menu-toggle" 
+            id="mobile-menu-toggle"
+            aria-label="Toggle mobile menu" 
+            onclick="openNav()"
+        >
+            <img src="{{ url_for('static', filename='assets/svg/hamburger.svg') }}" alt="Menu" />
+        </button>
+        
+        <a href="/" class="site-header__logo-link" aria-label="Home">
+            {% include 'partials/logo.html' %}
+        </a>
+        <button 
+            class="theme-toggle" 
+            aria-label="Toggle Theme"
+            title="Toggle Theme"
+            onclick="toggleTheme(event)"
+        >
+            <img src="{{ url_for('static', filename='assets/svg/theme.svg') }}" alt="Theme" />
+        </button>
+    </div>
+    
+    <!-- Desktop Header -->
+    <div class="site-header__desktop">
+        <a href="/" class="site-header__logo-link" aria-label="Home">
+            {% include 'partials/logo.html' %}
+        </a>
+        
+        <div class="divider-vertical"></div>
+        
+        <nav class="site-header__nav" aria-label="Primary navigation">
+            <ul>
+                <li><a href="/about">About</a></li>
+                <li><a href="/subscribe">Subscribe</a></li>
+            </ul>
+        </nav>
+
+        <div class="site-header__spacer"></div>
+
+        <div class="site-header__actions">
+            <div class="social-links">
+                <a 
+                    href="https://www.youtube.com/@Word-of-the-Day-2025" 
+                    aria-label="YouTube"
+                    title="YouTube Channel"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <img src="{{ url_for('static', filename='assets/svg/youtube.svg') }}" alt="YouTube" />
+                </a>
+                <a 
+                    href="https://x.com/WordOfTheDay_X" 
+                    aria-label="Twitter"
+                    title="Twitter Page"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <img src="{{ url_for('static', filename='assets/svg/twitter.svg') }}" alt="Twitter" />
+                </a>
+                <a 
+                    href="https://github.com/Word-of-the-Day-2025/Word-of-the-Day" 
+                    aria-label="GitHub"
+                    title="GitHub Repo"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <img src="{{ url_for('static', filename='assets/svg/github.svg') }}" alt="GitHub" />
+                </a>
+            </div>
+            
+            <div class="divider-vertical"></div>
+            
+            <button 
+                class="theme-toggle" 
+                aria-label="Toggle theme"
+                title="Toggle Theme"
+                onclick="toggleTheme(event)"
+            >
+                <img src="{{ url_for('static', filename='assets/svg/theme.svg') }}" alt="Theme" />
+            </button>
+        </div>
+    </div>
+</header>
+
+<div class="overlay" id="overlay" onclick="closeNav()"></div>

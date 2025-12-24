@@ -1,0 +1,26 @@
+<nav id="mobile-menu" class="mobile-menu" style="display: none;">
+    <a href="javascript:void(0)" class="close-button" onclick="closeNav()">
+        <img src="{{ url_for('static', filename='assets/svg/close.svg') }}" alt="Close Menu" />
+    </a>
+    <nav class="mobile-nav">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/subscribe">Subscribe</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/articles/api-docs">API</a></li>
+            <li><a href="mailto:2025wordoftheday@gmail.com">Contact</a></li>
+            <li><a href="/databases">Databases</a></li>
+        </ul>
+    </nav>
+    <div class="section-divider"></div>
+    <div class="mobile-social-icons">
+        <a href="https://www.youtube.com/@Word-of-the-Day-2025" aria-label="YouTube" title="YouTube Channel">
+            <img src="{{ url_for('static', filename='assets/svg/youtube_secondary.svg') }}" alt="YouTube Channel" />
+        <a href="https://x.com/WordOfTheDay_X" aria-label="Twitter" title="Twitter Account">
+            <img src="{{ url_for('static', filename='assets/svg/twitter_secondary.svg') }}" alt="Twitter Account" />
+        </a>
+        <a href="https://github.com/gaming-gaming/Word-of-the-Day" aria-label="GitHub" title="GitHub Repository">
+            <img src="{{ url_for('static', filename='assets/svg/github_secondary.svg') }}" alt="GitHub Repository" />
+        </a>
+    </div>
+</nav>
