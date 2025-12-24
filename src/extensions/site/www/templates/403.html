@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}403 · Word of the Day{% endblock %}
+
+{% block content %}
+<article class="page-content">
+    <!-- 403 Section -->
+    <section class="section">
+        <h1 class="heading-primary">403 - Forbidden</h1>
+        <img 
+            src="{{ url_for('static', filename='assets/img/403.png') }}" 
+            alt="Halt!"
+            class="error-image"
+        >
+    </section>
+</article>
+{% endblock %}
