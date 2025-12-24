@@ -1,0 +1,60 @@
+.button {
+    height: var(--button-height);
+    outline: 2px solid var(--outline);
+    outline-offset: -1px;
+    border-radius: var(--button-height);
+    border: none;
+    background-color: var(--bg);
+    color: var(--text);
+    font-size: var(--font-size-md);
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    padding: 0 var(--spacing-lg);
+    transition: background-color var(--transition-medium), outline-color var(--transition-medium);
+}
+
+.button:hover {
+    background-color: var(--bg);
+    outline-color: var(--accent);
+}
+
+.button--danger:hover {
+    outline-color: var(--red);
+}
+
+.button:active {
+    background-color: var(--bg-active);
+    outline-color: var(--accent-active);
+}
+
+.button--danger:active {
+    outline-color: var(--red);
+}
+
+.load-more-button {
+    display: block;
+    margin: 0 auto;
+    margin-top: var(--spacing-xl);
+}
+
+.button-locked {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.button-locked:hover,
+.button-locked:active {
+    background-color: var(--bg);
+    outline-color: var(--outline);
+    box-shadow: var(--shadow-md);
+}
+
+.subscription-card .button,
+.game-card .button {
+    width: 100%;
+}
+
+.subscription-card > :is(.button):first-of-type,
+.game-card > :is(.button):first-of-type {
+    margin-top: auto;
+}

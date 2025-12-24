@@ -1,0 +1,200 @@
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    cursor: pointer;
+    width: 100%;
+    outline: 2px solid var(--outline);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-lg);
+    padding: var(--spacing-sm) var(--spacing-md);
+}
+
+.radio-group label:last-child {
+    margin-bottom: var(--spacing-sm);
+}
+
+.radio-group label:hover {
+    outline-color: var(--accent);
+}
+
+.radio-group label:active {
+    outline-color: var(--accent-active);
+    background-color: var(--bg-active);
+}
+
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    cursor: pointer;
+    width: 100%;
+    outline: 2px solid var(--outline);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-lg);
+    padding: var(--spacing-sm) var(--spacing-md);
+}
+
+.checkbox-group label:hover {
+    outline-color: var(--accent);
+}
+
+.checkbox-group label:active {
+    outline-color: var(--accent-active);
+    background-color: var(--bg-active);
+}
+
+select {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-base);
+    border: 2px solid var(--outline);
+    border-radius: var(--radius-sm);
+    background-color: var(--bg);
+    color: var(--primary-text);
+    box-shadow: var(--shadow-sm);
+    transition: border-color var(--transition-medium), box-shadow var(--transition-medium);
+    cursor: pointer;
+}
+
+select:hover {
+    border-color: var(--accent);
+}
+
+select:focus {
+    border-color: var(--accent-active);
+    box-shadow: var(--shadow-md);
+    outline: none;
+}
+
+select:active {
+    border-color: var(--accent-active);
+    border-color: var(--accent-active);
+}
+
+input[type='time'] {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-base);
+    border: 2px solid var(--outline);
+    border-radius: var(--radius-sm);
+    background-color: var(--bg);
+    color: var(--primary-text);
+    box-shadow: var(--shadow-sm);
+    transition: border-color var(--transition-medium), box-shadow var(--transition-medium);
+    accent-color: var(--primary-text);
+    cursor: pointer;
+}
+
+input[type='time']:hover {
+    border-color: var(--accent);
+}
+
+/* Hide the clock icon but keep it clickable */
+input[type='time']::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    cursor: pointer;
+}
+
+/* Firefox */
+input[type='time']::-moz-calendar-picker-indicator {
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    cursor: pointer;
+}
+
+/* Make the time input a positioned container */
+input[type='time'] {
+    position: relative;
+}
+
+input[type='text'] {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-base);
+    border: 2px solid var(--outline);
+    border-radius: 9999px; /* Fully rounded edges for pill/rectangular inputs */
+    background-color: var(--bg);
+    color: var(--primary-text);
+    box-shadow: var(--shadow-md);
+    transition: border-color var(--transition-medium), box-shadow var(--transition-medium);
+}
+
+input[type='text']:hover {
+    border-color: var(--accent);
+}
+
+input[type='text']:focus {
+    border-color: var(--accent);
+    background-color: var(--bg-active);
+    outline: none;
+}
+
+input[type='text']:active {
+    border-color: var(--accent-active);
+}
+
+textarea {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-base);
+    border: 2px solid var(--outline);
+    border-radius: var(--radius-sm);
+    border-bottom-right-radius: 0;
+    background-color: var(--bg);
+    color: var(--primary-text);
+    box-shadow: var(--shadow-md);
+    transition: border-color var(--transition-medium), box-shadow var(--transition-medium);
+    resize: vertical;
+    min-height: 6rem;
+}
+
+textarea:hover {
+    border-color: var(--accent);
+}
+
+textarea:focus {
+    border-color: var(--accent);
+    background-color: var(--bg-active);
+    outline: none;
+}
+
+textarea:active {
+    border-color: var(--accent-active);
+    background-color: var(--bg-active);
+}
+
+.form-actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+body.mobile .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+}

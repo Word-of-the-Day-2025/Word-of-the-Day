@@ -1,0 +1,123 @@
+.site-header {
+    background-color: var(--bg);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4rem;
+    z-index: 1000;
+    line-height: 0;
+    touch-action: none; /* To make it so mobile users can't scroll on the header bar */
+}
+
+/* Border on bottom with offset */
+.site-header::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 100%;
+    height: 2px;
+    background-color: var(--outline);
+    z-index: 1;
+}
+
+/* Shadow underneath */
+.site-header::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    width: 100%;
+    height: 8px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, var(--shadow-opacity)), rgba(0, 0, 0, 0));
+    pointer-events: none;
+    z-index: 0;
+}
+
+.site-header svg {
+    height: 100%;
+    width: auto;
+}
+
+.site-header img {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.site-header button {
+    width: 1.5rem;
+    height: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.site-header__desktop {
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+}
+
+.site-header__mobile {
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+}
+
+.site-header__mobile > * {
+    display: flex;
+    align-items: center;
+    height: 1.5rem;
+}
+
+.site-header__logo-link {
+    display: flex;
+    height: 1.5rem;
+    width: auto;
+    color: var(--text-color);
+    transition: color 0.1s ease-in-out;
+}
+
+.site-header .divider-vertical {
+    width: 2px;
+    height: 1rem;
+    margin: 0 var(--spacing-lg);
+}
+
+.site-header__nav ul {
+    list-style: none;
+    display: flex;
+    gap: var(--spacing-md);
+    direction: ltr;
+}
+
+.site-header__spacer {
+    flex-grow: 1;
+}
+
+.site-header__actions {
+    display: flex;
+    align-items: center;
+}
+
+.site-header__actions .social-links {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+body.mobile .site-header__desktop {
+    display: none;
+}
+
+body.desktop .site-header__mobile {
+    display: none;
+}

@@ -1,0 +1,105 @@
+.card {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-sm);
+    outline: 2px solid var(--outline);
+    outline-offset: -1px;
+    box-shadow: var(--shadow-lg);
+    padding: var(--spacing-md);
+    margin: var(--spacing-md) auto;
+}
+
+.wotd-card .wotd-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm) var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.wotd-card .wotd-date {
+    margin-top: var(--spacing-sm);
+    margin-bottom: 0;
+}
+
+.database-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.database-card a:has(img) {
+    width: auto;
+    height: 2rem;
+    margin: 0 auto;
+}
+
+.database-card img {
+    width: auto;
+    height: 2rem;
+}
+
+.database-card .database-month,
+.database-card .database-filename,
+.database-card .database-filesize {
+    margin: auto 0;
+}
+
+.subscription-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 24rem;
+    gap: var(--spacing-md);
+}
+
+body.mobile .subscription-card {
+    margin: var(--spacing-sm) auto;
+}
+
+.game-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 24rem;
+    gap: var(--spacing-md);
+}
+
+body.mobile .game-card {
+    margin: var(--spacing-sm) auto;
+}
+
+.subscription-card > * {
+    margin: 0;
+    padding: 0;
+}
+
+.subscription-card .subscription-image {
+    width: var(--subscription-image-width);
+    height: var(--subscription-image-width); /* Keep square */
+}
+
+.subscription-card .header-secondary {
+    margin: 0 auto;
+}
+
+.discord-config-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-md);
+    width: max-content;
+    min-width: 0;
+}
+
+.discord-config-card .discord-icon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    outline: 2px solid var(--outline);
+    outline-offset: -1px;
+    box-shadow: var(--shadow-md);
+}
