@@ -595,8 +595,6 @@ async def send_wotd_loop():
                     if scheduled_time_minutes == current_time_minute:
                         subscribers_to_notify.append(subscriber)
                 
-                log_info(f'Sending WOTD to {len(subscribers_to_notify)} subscribers')
-                
                 # Send messages with rate limiting
                 for subscriber in subscribers_to_notify:
                     async with SEMAPHORE:  # Rate limit: max 45 concurrent requests
@@ -619,13 +617,11 @@ async def send_wotd_loop():
                             else:
                                 guild = client.get_guild(subscriber_guild_id)
                                 if not guild:
-                                    log_warning(f'Guild {subscriber_guild_id} not found, unsubscribing')
                                     subscribers.unsubscribe(None, subscriber_guild_id, subscriber_channel_id)
                                     continue
                                     
                                 channel = guild.get_channel(subscriber_channel_id)
                                 if not channel:
-                                    log_warning(f'Channel {subscriber_channel_id} not found, unsubscribing')
                                     subscribers.unsubscribe(None, subscriber_guild_id, subscriber_channel_id)
                                     continue
                                     
@@ -637,20 +633,17 @@ async def send_wotd_loop():
                                     
                         except discord.errors.Forbidden:
                             # Bot doesn't have permission, unsubscribe
-                            log_warning(f'Forbidden error, unsubscribing user/channel')
                             if subscriber_user_id is not None:
                                 subscribers.unsubscribe(subscriber_user_id, None, None)
                             else:
                                 subscribers.unsubscribe(None, subscriber_guild_id, subscriber_channel_id)
                         except discord.errors.NotFound:
                             # User/channel not found, unsubscribe
-                            log_warning(f'Not found error, unsubscribing user/channel')
                             if subscriber_user_id is not None:
                                 subscribers.unsubscribe(subscriber_user_id, None, None)
                             else:
                                 subscribers.unsubscribe(None, subscriber_guild_id, subscriber_channel_id)
                         except Exception as e:
-                            log_exception(f'Error sending message to subscriber {subscriber}: {str(e)}')
                             continue
                             
         except Exception as e:
