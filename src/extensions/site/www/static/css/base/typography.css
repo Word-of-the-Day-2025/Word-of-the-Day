@@ -1,0 +1,237 @@
+/* Load font files */
+@font-face {
+    font-family: 'Inter Regular';
+    src: url('../../assets/ttf/Inter-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Inter Italic';
+    src: url('../../assets/ttf/Inter-Italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'Inter Medium';
+    src: url('../../assets/ttf/Inter-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Inter Bold';
+    src: url('../../assets/ttf/Inter-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Inter Display Medium';
+    src: url('../../assets/ttf/InterDisplay-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Inter Display Bold';
+    src: url('../../assets/ttf/InterDisplay-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'JetBrains Mono';
+    src: url('../../assets/ttf/JetBrainsMono-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'JetBrains Mono';
+    src: url('../../assets/ttf/JetBrainsMono-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+/* Header Styles */
+.site-header__nav a {
+    font-family: 'Inter Medium', sans-serif;
+    font-size: var(--font-base);
+    color: var(--primary-text);
+    transition: var(--transition-fast);
+}
+
+.site-header__nav a:hover {
+    text-decoration: none;
+    color: var(--accent);
+}
+
+.site-header__nav a:active {
+    color: var(--accent-active);
+}
+
+/* General Typography Styles */
+
+body.mobile {
+    color: var(--primary-text);
+}
+
+body.desktop {
+    color: var(--primary-text);
+    line-height: 1.6;
+}
+
+p {
+    font-family: 'Inter Regular', sans-serif;
+    font-size: var(--font-base);
+}
+
+article p {
+    margin: var(--spacing-sm) 0;
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+}
+a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+    transition: var(--transition-fast);
+}
+a:active {
+    color: var(--accent-active);
+    text-decoration: underline;
+    transition: var(--transition-fast);
+}
+
+h1 {
+    font-family: 'Inter Display Bold', sans-serif;
+    font-size: var(--font-2xl);
+    text-shadow: var(--shadow-lg);
+}
+
+h2 {
+    font-family: 'Inter Display Medium', sans-serif;
+    font-size: var(--font-xl);
+    text-shadow: var(--shadow-md);
+}
+
+li {
+    font-family: 'Inter Regular', sans-serif;
+    font-size: var(--font-base);
+}
+
+.subtext {
+    font-size: var(--font-sm);
+    color: var(--secondary-text);
+}
+
+.discord-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--font-base);
+    color: var(--primary-text);
+}
+
+/* Word of the Day Card Styles */
+
+.wotd-card .wotd-word {
+    font-family: 'Inter Bold', sans-serif;
+    font-size: var(--font-xl);
+    color: var(--primary-text);
+}
+
+.wotd-card .wotd-pos {
+    font-family: 'Inter Regular', sans-serif;
+    font-size: var(--font-base);
+    color: var(--secondary-text);
+}
+
+.wotd-card .wotd-ipa {
+    font-family: 'Inter Regular', sans-serif;
+    font-size: var(--font-base);
+    color: var(--secondary-text);
+}
+
+.wotd-card .wotd-definition {
+    font-size: var(--font-base);
+    color: var(--primary-text);
+}
+
+.wotd-card .wotd-date {
+    font-size: var(--font-sm);
+    color: var(--secondary-text);
+}
+
+/* Database Card Styles */
+
+.database-card .database-month {
+    font-family: 'Inter Bold', sans-serif;
+    font-size: var(--font-base);
+    color: var(--primary-text);
+}
+
+.database-card .database-filename {
+    font-family: 'Inter Regular', sans-serif;
+    font-size: var(--font-base);
+    color: var(--secondary-text);
+}
+
+/* Quote Card Styles */
+
+.quote-card__author {
+    font-family: 'Inter Bold', sans-serif;
+    font-size: var(--font-base);
+    color: var(--primary-text);
+}
+
+.quote-card__role {
+    font-family: 'Inter Regular', sans-serif;
+    font-size: var(--font-base);
+    color: var(--secondary-text);
+}
+
+.quote-card__text {
+    font-family: 'Inter Italic', sans-serif;
+    font-size: var(--font-base);
+    color: var(--primary-text);
+}
+
+/* Code Styles */
+
+code {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.inline-code {
+    background-color: var(--inline-code-bg);
+    padding: 0.1rem 0.25rem;
+    border-radius: var(--radius-xs);
+}
+
+/* Form Styles */
+
+label {
+    font-family: 'Inter Medium', sans-serif;
+    font-size: var(--font-base);
+    color: var(--primary-text);
+}
+
+/* Footer Styles */
+
+.site-footer__copyright {
+    font-family: 'Inter Regular', sans-serif;
+    font-size: var(--font-base);
+    color: var(--secondary-text);
+}
+
+.site-footer__nav a {
+    font-family: 'Inter Regular', sans-serif;
+    font-size: var(--font-base);
+    color: var(--footer-link);
+    transition: var(--transition-fast);
+}
+
+.site-footer__nav a:hover {
+    text-decoration: none;
+    color: var(--accent);
+}
+
+.site-footer__nav a:active {
+    color: var(--accent-active);
+}

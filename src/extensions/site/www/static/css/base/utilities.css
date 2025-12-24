@@ -1,0 +1,77 @@
+/* Cheesy ahh custom scrollbar */
+::-webkit-scrollbar {
+    width: 16px;
+}
+::-webkit-scrollbar-track {
+    background: var(--scrollbar-bg);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 8px;
+    border: 4px solid var(--scrollbar-bg);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+}
+::-webkit-scrollbar-thumb:active {
+    background: var(--scrollbar-thumb-active);
+}
+
+.divider-vertical {
+    background-color: var(--outline);
+    border: none;
+}
+
+.section-divider {
+    width: 50%;
+    height: 2px;
+    background-color: var(--outline);
+    border: none;
+}
+
+.error-image {
+    width: 16rem;
+    height: 16rem;
+    display: block;
+    margin: var(--spacing-xl) auto;
+    box-shadow: var(--shadow-lg);
+}
+
+body.mobile .error-image {
+    width: 50%;
+    height: auto;
+}
+
+/* Code */
+
+.code-block {
+    font-family: 'JetBrains Mono', monospace;
+    background-color: var(--block-code-bg);
+    outline: 2px solid var(--block-code-outline);
+    outline-offset: -1px;
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-sm);
+    box-shadow: var(--shadow-lg);
+    overflow-x: auto;
+    margin: var(--spacing-sm) 0;
+}
+
+/* Default HTML element styles */
+
+article ul {
+    list-style: disc;
+    margin-left: var(--spacing-lg);
+}
+
+article ul li {
+    margin-bottom: var(--spacing-sm); /* Create a gap for lists */
+}
+
+ul li::marker {
+    color: var(--bullet-color);
+}
+
+/* Add animations to everything so the theme transition is smooth */
+* {
+    transition: background-color var(--transition-medium), color var(--transition-medium), box-shadow var(--transition-medium), outline-color var(--transition-medium);
+}
