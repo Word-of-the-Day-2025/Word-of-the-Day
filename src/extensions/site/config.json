@@ -1,0 +1,22 @@
+{
+    "www": {
+        "enabled": true,
+        "port": 444,
+        "threads": 4,
+        "backlog": 128,
+        "rate_limit": {
+            "max_requests": 30,
+            "window_ms": 60000
+        }
+    },
+    "api": {
+        "enabled": true,
+        "port": 8444,
+        "threads": 4,
+        "backlog": 128,
+        "rate_limit": {
+            "max_requests": 10,
+            "window_ms": 60000
+        }
+    }
+}
