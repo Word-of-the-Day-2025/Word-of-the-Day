@@ -1,0 +1,73 @@
+body {
+    padding-top: 4rem; /* Offset for fixed header */
+    background-color: var(--bg); /* Couldn't find a better place for this */
+}
+
+body.mobile {
+    padding-top: 3rem; /* Slightly less offset for mobile header */
+}
+
+/* Layout Styles */
+
+body.mobile .page-content {
+    padding: var(--content-padding);
+}
+
+body.desktop .page-content {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+}
+
+.heading-primary {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+    text-align: center;
+}
+
+.heading-secondary {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
+}
+
+.section-divider {
+    margin: var(--spacing-xl) 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.subscription-section {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-md);
+}
+
+body.mobile .subscription-section {
+    gap: 0;
+}
+
+body.mobile .subscription-section {
+    flex-direction: column;
+}
+
+.games-section {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-md);
+}
+
+body.mobile .games-section {
+    gap: 0;
+}
+
+body.mobile .games-section {
+    flex-direction: column;
+}
+
+/* Make sure all children take equal space */
+.subscription-section > * {
+    flex: 1;
+}
+.games-section > * {
+    flex: 1;
+}
