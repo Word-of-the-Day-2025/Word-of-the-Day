@@ -1,0 +1,7 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+	<title>New Project</title>
+	<style>
+		.s0 { fill: #ffff00 } 
+	</style>
+	<path id="download" class="s0" d="m112 32h32v72h40l-56 56-56-56h40zm112 192h-192v-64h32v32h128v-32h32z"/>
+</svg>
