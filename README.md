@@ -4,7 +4,7 @@
 
 # Word of the Day
 [![Managed by Sesquipedalians](https://raw.githubusercontent.com/Word-of-the-Day-2025/WOTD-Brand-Assets/main/badges/Managed_by-Sesquipedalians-%231976d2.svg)](https://wotd.site)
-[![Version](https://raw.githubusercontent.com/Word-of-the-Day-2025/WOTD-Brand-Assets/main/badges/Version-1.3.0-%2376D219.svg)](https://github.com/gaming-gaming/Word-of-the-Day/releases/)
+[![Version](https://raw.githubusercontent.com/Word-of-the-Day-2025/WOTD-Brand-Assets/main/badges/Version-1.4.0-%2376D219.svg)](https://github.com/gaming-gaming/Word-of-the-Day/releases/)
 [![Free API for Developers](https://raw.githubusercontent.com/Word-of-the-Day-2025/WOTD-Brand-Assets/main/badges/Free_API_for_Developers-%23d21976.svg)](https://wotd.site/api)
 [![License](https://raw.githubusercontent.com/Word-of-the-Day-2025/WOTD-Brand-Assets/main/badges/License-Apache%202.0-gradient.svg)](LICENSE)
 
@@ -31,46 +31,35 @@ The code is completely free to use and open-source under the [Apache License 2.0
 Word of the Day comes with extensions you may use in `./src/extensions`. The extensions included by default are for providing channels to access Word of the Day. You may make your own extensions by creating a folder with a `__init__.py` file inside.
 ## Website + API
 The **Site** extension is in the folder `./src/extensions/site`. This extension is for both the main website ([`wotd.site`](https://wotd.site)) and the API ([`api.wotd.site`](https://api.wotd.site)).
-Inside the extension's folder is a `config.json` file for configuring the site, and a `.env` file for setting the hashed admin password.
-There is also a `messages/` folder for messages sent via the contact page, which contains json files of user mail.
+Inside the extension's folder is a `config.json` file for configuring the site, and a `.env` file for setting the hashed admin password (hashed with Argon2id)
+Admins can append WOTDs to the database by using the web page at `/admin/append-word?password={ADMIN_PASSWORD}`.
 
 The API has a variety of endpoints for developers to use:
-- **/query?date={date}**: Gets the WOTD for a specific date (format: YYYY-MM-DD). If no date is provided, it defaults to the current date.
-- **/query_previous?date={date}&limit={limit}**: Gets a list of previous WOTDs. The date parameter is optional and defaults to the current date. The limit parameter specifies how many previous WOTDs to return (default is 3, maximum is 8).
-- **/find_wotd?word={word}**: Searches for a specific word in the WOTD database. The word parameter is required.
+- `/query?date={date}`: Gets the WOTD for a specific date (format: YYYY-MM-DD). If no date is provided, it defaults to the current date.
+- `/query_previous?date={date}&limit={limit}`: Gets a list of previous WOTDs. The date parameter is optional and defaults to the current date. The limit parameter specifies how many previous WOTDs to return (default is 3, maximum is 8).
+- `/find_wotd?word={word}`: Searches for a specific word in the WOTD database. The word parameter is required.
 
 > [!NOTE]  
 > Displayed URLs (Like the ones shown on the API documentation page) and social links are hard-coded into the site. If you are self-hosting, be sure to replace these with your own data.
 
 ## Discord Bot
-The **Discord Bot** extension is in the folder `./src/extensions/discord-bot`. Inside is a `config.json` file for your bot's configuration, and a `.env` file for your bot's token. `subscribers.db` is a database of subscribed server channels and DMs.
+The **Discord Bot** extension is in the folder `./src/extensions/discord_bot`. Inside is a `config.json` file for your bot's configuration, and a `.env` file for your bot's token. `subscribers.db` is a database of subscribed server channels and DMs.
 
-The Discord bot includes a variety of commands for both WOTD users and administrators. User commands use slashes, while admin commands use the "! " suffix.
-
-Users may use basic query and config commands:
-![Demonstration 0](https://raw.githubusercontent.com/Word-of-the-Day-2025/WOTD-Brand-Assets/refs/heads/main/misc/Demo0.gif)
-![Demonstration 1](https://raw.githubusercontent.com/Word-of-the-Day-2025/WOTD-Brand-Assets/refs/heads/main/misc/Demo1.gif)
-
-Admins have access to advanced commands unavailable to regular users:
-- **append {word} {ipa} {pos} {definition} {date}**: Appends a new word to the `words.db` database. The {date} argument is optional and defaults to the day after the last date set in the table.
-- **monitor**: Returns information on the hosting computer's specs and performance.
-- **query_next**: Queries tomorrow's Word of the Day.
-- **set_wotd {word} {ipa} {pos} {definition}**: Sets the current Word of the Day.
-- **test_send**: A function to test the message sent to Word of the Day subscribers.
+You can see the list of commands the Discord bot supports [here](https://wotd.site/articles/setup-discord)
 
 # Self-Hosting
 > [!CAUTION]
 > By default, both the website and API will be hosted by starting the script. To change this, you may edit the site configuration settings at `./src/extensions/site/config.json`.
 #### Linux:
 ```bash
-git clone https://github.com/gaming-gaming/Word-of-the-Day.git
+git clone https://github.com/Word-of-the-Day-2025/Word-of-the-Day.git
 cd Word-of-the-Day
 pip3 install -r requirements.txt
 sudo bash start.sh
 ```
 #### Windows (CMD as admin):
 ```cmd
-git clone https://github.com/gaming-gaming/Word-of-the-Day.git
+git clone https://github.com/Word-of-the-Day-2025/Word-of-the-Day.git
 cd Word-of-the-Day
 pip install -r requirements.txt
 start.bat
