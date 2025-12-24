@@ -1,0 +1,38 @@
+.quote-card {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+body.mobile .quote-card {
+    flex-direction: column;
+    text-align: center;
+}
+
+body.mobile .quote-card__content {
+    display: block;
+}
+
+.quote-card__avatar {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    outline: 2px solid var(--outline);
+    outline-offset: -1px;
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+}
+
+.quote-card__role {
+    margin-left: var(--spacing-sm);
+}
+
+body.mobile .quote-card__role {
+    display: block;
+    margin-left: 0;
+    margin-top: var(--spacing-xs);
+}
+
+.quote-card__text {
+    margin-top: var(--spacing-sm);
+}
