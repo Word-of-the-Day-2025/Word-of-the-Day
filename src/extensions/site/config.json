@@ -1,7 +1,7 @@
 {
     "www": {
         "enabled": true,
-        "port": 444,
+        "port": 443,
         "threads": 4,
         "backlog": 128,
         "rate_limit": {
@@ -11,7 +11,7 @@
     },
     "api": {
         "enabled": true,
-        "port": 8444,
+        "port": 8443,
         "threads": 4,
         "backlog": 128,
         "rate_limit": {
@@ -19,4 +19,5 @@
             "window_ms": 60000
         }
     }
+
 }
