@@ -335,7 +335,7 @@ def www_index():
     accept_lang = request.headers.get('Accept-Language', 'en-US')
     date_format = 'Normal'
     if 'en-US' in accept_lang:
-        date_format = 'American'  # God bless America :bald_eagle:
+        date_format = 'American'  # God bless America :eagle:
 
     wotd_text = ''
     if device_type == 'mobile':
@@ -343,7 +343,7 @@ def www_index():
     else:
         wotd_text = 'Word of the Day'
     
-    # Format date
+    # Format date for current WOTD
     if current_date:
         date_obj = datetime.datetime.strptime(current_date, '%Y-%m-%d')
         day = str(date_obj.day)
@@ -354,20 +354,23 @@ def www_index():
             day_suffix = 'nd'
         elif day[-1] == '3' and day != '13':
             day_suffix = 'rd'
+        else:
+            day_suffix = 'th'
         month_name = date_obj.strftime('%B')
         month = str(date_obj.month).zfill(2)
         year = str(date_obj.year)
-        date = f'{day} {month_name} {year}'
         if date_format == 'American':
-            date = f'{month_name} {day}{day_suffix}, {year}'
+            date_formatted_current = f'{month_name} {day}{day_suffix}, {year}'
+        else:
+            date_formatted_current = f'{day} {month_name} {year}'
     else:
-        date = '????-??-??'
+        date_formatted_current = '????-??-??'
 
     # Format date in previous WOTDs
     if previous_wotds:
         for wotd_entry in previous_wotds:
             try:
-                # Store the original date BEFORE formatting
+                # Store the original date before formatting
                 original_date = wotd_entry['date']
                 
                 date_obj = datetime.datetime.strptime(original_date, '%Y-%m-%d')
@@ -408,10 +411,11 @@ def www_index():
         ipa=index_ipa,
         pos=index_pos,
         definition=index_definition,
-        date=index_date,
+        date=date_formatted_current,
         current_date=current_date,
         previous_wotds=previous_wotds,
-        has_more=has_more
+        has_more=has_more,
+        date_format=date_format
     )
 
 @app_www.route('/about')
