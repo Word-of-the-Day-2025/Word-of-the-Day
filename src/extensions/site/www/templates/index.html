@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Word of the Day{% endblock %}
+
+{% block content %}
+<article class="page-content">
+    <h1 class="heading-primary">Today's {{ wotd }}:</h1>
+
+    {% if word %}
+    <section class="card wotd-card">
+        <div class="wotd-header">
+            <span class="wotd-word">{{ word }}</span>
+            <span class="wotd-ipa">{{ ipa }}</span>
+            <span class="wotd-pos wotd-pos-{{ pos|lower }}">{{ pos }}</span>
+        </div>
+        <p class="wotd-definition">{{ definition }}</p>
+        <p class="wotd-date" data-date="{{ current_date }}">{{ date }}</p>
+    </section>
+    {% else %}
+    <section class="no-wotd" style="text-align: center; margin: 1rem;">
+        <p>No {{ wotd }} available at this time :(</p>
+    </section>
+    {% endif %}
+
+    {% if previous_wotds %}
+    <div class="section-divider"></div>
+    <h1 class="heading-primary">Previous {{ wotd }}s:</h1>
+
+    {% for wotd in previous_wotds %}
+    <section class="card wotd-card">
+        <div class="wotd-header">
+            <span class="wotd-word">{{ wotd.word }}</span>
+            <span class="wotd-ipa">{{ wotd.ipa }}</span>
+            <span class="wotd-pos wotd-pos-{{ wotd.pos|lower }}">{{ wotd.pos }}</span>
+        </div>
+        <p class="wotd-definition">{{ wotd.definition }}</p>
+        <p class="wotd-date" data-date="{{ wotd.date }}">{{ wotd.date_formatted }}</p>
+    </section>
+    {% endfor %}
+    {% endif %}
+
+    {% if has_more %}
+    <button id="load-more-button" class="button load-more-button" data-date-format="{{ date_format }}">Load More</button>
+    {% endif %}
+    {% endblock %}
+
+    {% block extra_scripts %}
+    <script defer src="{{ url_for('static', filename='js/load-more.js') }}"></script>
+    {% endblock %}
+</article>
