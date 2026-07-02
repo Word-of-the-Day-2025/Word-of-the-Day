@@ -18,7 +18,6 @@ import secrets
 import shutil
 import sys
 import threading
-from torrentool.api import Torrent
 from waitress import serve
 
 from main import MAIN_DOMAIN, API_DOMAIN, VERSION
@@ -288,7 +287,7 @@ def get_wotd_databases():
 global github_data
 get_wotd()
 get_previous_wotd()
-github_data = get_github_data('gaming-gaming')
+github_data = get_github_data('gilgamesh8443')
 
 def generate_config_discord_link(is_user: bool, user_id: int = None, guild_id: int = None, channel_id: int = None, name: str = None, avatar_url: str = None) -> str:
     token = ''
@@ -407,6 +406,7 @@ def www_index():
     return render_template('index.html',
         wotd=wotd_text,
         device_type=device_type,
+        copyright_year=datetime.datetime.now().year,
         word=index_word[:1].upper() + index_word[1:] if index_word else '',
         ipa=index_ipa,
         pos=index_pos,
@@ -415,7 +415,7 @@ def www_index():
         current_date=current_date,
         previous_wotds=previous_wotds,
         has_more=has_more,
-        date_format=date_format
+        date_format=date_format,
     )
 
 @app_www.route('/about')
@@ -434,8 +434,9 @@ def www_about():
     return render_template('about.html',
         wotd=wotd_text,
         device_type=device_type,
+        copyright_year=datetime.datetime.now().year,
         github_username=github_data.get('name'),
-        github_url=github_data.get('html_url')
+        github_url=github_data.get('html_url'),
     )
 
 @app_www.route('/subscribe', methods=['GET'])
@@ -452,7 +453,8 @@ def www_subscribe():
     # Render template
     return render_template('subscribe.html',
         wotd=wotd_text,
-        device_type=device_type
+        device_type=device_type,
+        copyright_year=datetime.datetime.now().year
     )
 
 @app_www.route('/databases', methods=['GET'])
@@ -471,7 +473,8 @@ def www_databases():
     return render_template('databases.html',
         wotd=wotd_text,
         device_type=device_type,
-        databases=databases
+        databases=databases,
+        copyright_year=datetime.datetime.now().year
     )
 
 @app_www.route('/databases/download/<path:filename>', methods=['GET'])
@@ -507,7 +510,8 @@ def www_api():
     return render_template('api-docs.html',
         wotd=wotd_text,
         docs=docs_text,
-        device_type=device_type
+        device_type=device_type,
+        copyright_year=datetime.datetime.now().year
     )
 
 @app_www.route('/articles/terms-discord', methods=['GET'])
@@ -520,7 +524,8 @@ def www_discord_terms():
     return render_template('article.html',
         title='Terms of Service (Discord Bot)',
         content=md_content,
-        device_type=device_type
+        device_type=device_type,
+        copyright_year=datetime.datetime.now().year
     )
 
 @app_www.route('/articles/privacy-discord', methods=['GET'])
@@ -531,7 +536,8 @@ def www_discord_privacy():
     return render_template('article.html',
         title='Privacy Policy (Discord Bot)',
         content=PRIVACY_DISCORD_HTML,
-        device_type=device_type
+        device_type=device_type,
+        copyright_year=datetime.datetime.now().year
     )
 
 @app_www.route('/articles/setup-discord', methods=['GET'])
@@ -542,7 +548,8 @@ def www_discord_setup():
     return render_template('article.html',
         title='Discord Bot Setup',
         content=SETUP_DISCORD_HTML,
-        device_type=device_type
+        device_type=device_type,
+        copyright_year=datetime.datetime.now().year
     )
 
 @app_www.route('/config-discord', methods=['GET'])
@@ -584,6 +591,7 @@ def www_config_discord():
     if token_data and ((token_data.get('is_user') and str(token_data.get('user_id')) == str(user_id)) or (not token_data.get('is_user') and str(token_data.get('guild_id')) == str(guild_id) and str(token_data.get('channel_id')) == str(channel_id))):
         return render_template('config-discord.html',
             device_type=device_type,
+            copyright_year=datetime.datetime.now().year,
             timezones=pytz.all_timezones,
             discord_name=token_data.get('name'),
             discord_icon_base64=base64.b64encode(token_data.get('avatar_image').getvalue()).decode('utf-8'),
@@ -600,7 +608,8 @@ def www_config_discord():
         )
     else:
         return render_template('403.html',
-            device_type=device_type
+            device_type=device_type,
+            copyright_year=datetime.datetime.now().year
         ), 403
 
 @app_www.route('/admin/append-word', methods=['GET', 'POST'])
@@ -611,23 +620,27 @@ def www_admin_append_word():
     password = request.args.get('password')
     if password is None:
         return render_template('403.html',
-            device_type=device_type
+            device_type=device_type,
+            copyright_year=datetime.datetime.now().year
         ), 403
     ph = argon2.PasswordHasher()
     try:
         ph.verify(ADMIN_PASSWORD, password)
     except argon2.exceptions.VerifyMismatchError:
         return render_template('403.html',
-            device_type=device_type
+            device_type=device_type,
+            copyright_year=datetime.datetime.now().year
         ), 403
     except Exception as e:
         log_exception(f'Error verifying admin password: {e}')
         return render_template('403.html',
-            device_type=device_type
+            device_type=device_type,
+            copyright_year=datetime.datetime.now().year
         ), 403
     
     return render_template('admin-append-word.html',
-        device_type=device_type
+        device_type=device_type,
+        copyright_year=datetime.datetime.now().year
     )
 
 # This is required for the load more button, the retro console versions of the site will use pages, though
